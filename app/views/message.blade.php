@@ -1,3 +1,1 @@
-@section('content')
         {{$message}}
-@stop

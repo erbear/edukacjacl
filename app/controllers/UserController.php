@@ -3,7 +3,7 @@ class UserController extends BaseController
 {
 	public function getLogin()
     {
-            return View::make('login');
+            return View::make('user.login');
     }
 
     public function postLogin()
@@ -29,7 +29,7 @@ class UserController extends BaseController
     public function postRegister()
     {
         $user = new User;
-        $user->name = Input::get('login');
+        $user->login = Input::get('login');
         $user->password = Hash::make(Input::get('password'));
         $user = $user->save();
         if ($user)

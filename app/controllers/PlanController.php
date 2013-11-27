@@ -46,14 +46,11 @@ class PlanController extends BaseController
 
 	}
 	public function getMyPlan(){
-		$lecture = Lecture::where('user_id', Auth::user()->id)->get();//nie jestem pewny czy to bedzie smigac, nie mam uzytkownika
-
+		$lectures = Auth::user()->lectures;
 		View::make('plan.getplan', ['lecture'=>$lecture]);
 	}
 	public function getPlan($user){
-        $lecture = Lecture::find(8);
-        $user = User::find(1);
-        $user = $user->lectures()->attach($lecture);
+        
         return $user;
 	}
 }

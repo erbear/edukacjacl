@@ -1,9 +1,35 @@
-{{Form::open(array('path'=>'user.login', 'method'=>'post'));}}
-        {{Form::text('login','',array(
-                'placeholder'=>'login'
-        ));}}
-        {{Form::password('password',array(
-                'placeholder'=>'haslo'
-        ));}}
-        {{Form::submit('Zaloguj!');}}
-{{Form::close();}}
+@extends('layouts.layout')
+@section('head')
+    <link href="{{asset('css')}}/form-log.css" rel="stylesheet">
+@stop
+@section('content')
+	
+<div class="container">
+      <div class="row">
+          <div class="er-form col-sm-4 col-sm-offset-4">
+              {{Form::open(array('path'=>'user.login', 'method'=>'post'));}}
+                  <div class="form-group">
+                    {{Form::text('login','',array(
+				            'placeholder'=>'Login',
+				            'class'=>'form-control',
+				            'id'=>'exampleInputEmail1'
+				    ));}}
+                  </div>
+                  <div class="form-group">
+                     {{Form::password('password',array(
+				            'placeholder'=>'Password',
+				            'class'=>'form-control',
+				            'id'=>'exampleInputPassword1'
+				    ));}}
+                  </div>
+                  
+                  {{Form::submit('Zaloguj!',array(
+				    		'class'=>'btn btn-default'
+				    ));}}
+                
+			{{Form::close();}}
+          </div>
+      </div>
+      
+  </div>
+@stop

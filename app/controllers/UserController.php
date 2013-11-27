@@ -9,7 +9,7 @@ class UserController extends BaseController
     public function postLogin()
     {
         $credentials = array(
-                        'name'=> Input::get('login'),
+                        'login'=> Input::get('login'),
                         'password'=> Input::get('password'),
                 );
         

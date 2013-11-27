@@ -25,6 +25,9 @@ class Lecture extends Eloquent
     {
         return $this->belongsTo('Teacher');
     }
-
+    public function users()
+    {
+        return $this->belongsToMany('User');
+    }
 
 }

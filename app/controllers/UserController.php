@@ -8,18 +8,13 @@ class UserController extends BaseController
 
     public function postLogin()
     {
-        $credentials = array(
-                        'login'=> Input::get('login'),
-                        'password'=> Input::get('password'),
-                );
-        
-        if (Auth::attempt($credentials))
-        {
-        return View::make('message')->with('message', 'Zalogowano!');
-        }else
-        {
-        return View::make('message')->with('message', 'Logowanie nie powiodło się :(');
+        $user = User::where('login', Input::get('login'))->first();
+        if (Crypt::decrypt($user->password) == Input::get('password')){
+            Auth::loginUsingId($user->id);
+            return Auth::user()->login;
+
         }
+        
     }
 
 	public function getRegister()
@@ -30,7 +25,7 @@ class UserController extends BaseController
     {
         $user = new User;
         $user->login = Input::get('login');
-        $user->password = Hash::make(Input::get('password'));
+        $user->password = Crypt::encrypt(Input::get('password'));
         $user = $user->save();
         if ($user)
         {

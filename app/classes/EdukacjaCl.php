@@ -16,6 +16,7 @@ class EdukacjaCl
 	];
 	private $dataToSend;
 	private $courses;
+	private $semestr;
 	public function EdukacjaCl($user, $password)
 	{
 		$this->ch = curl_init ();
@@ -98,6 +99,7 @@ class EdukacjaCl
 	public function wybierzSemestr($index){
 		$doc = phpQuery::newDocumentHtml($this->HTML);
 		$urlPath = "https://edukacja.pwr.wroc.pl" . pq('a[title="Wybierz wiersz"]:eq('.$index.')')->attr('href');
+		$this->semestr = pq('a[title="Wybierz wiersz"]:eq('.$index.')')->parent('td')->nextAll('td')->eq(2)->text();
 		curl_setopt($this->ch, CURLOPT_URL, $urlPath);
 		$this->setPOST(false);
 		$this->loadPage();
@@ -131,7 +133,7 @@ class EdukacjaCl
 				$this->courses[$key]["koniec"] = $timestapmps[6] . ":" . $timestapmps[7];
 				$this->courses[$key]["budynek"] = $timestapmps[9];
 				$this->courses[$key]["sala"] = $timestapmps[11];
-			
+				$this->courses[$key]["semestr"] = $this->semestr;
 			}
 		}
 		

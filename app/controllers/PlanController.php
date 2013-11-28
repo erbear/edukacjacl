@@ -11,7 +11,7 @@ class PlanController extends BaseController
         {
             $day = new Day();
             $day->name = $course["dzien"];
-            $day->created();
+            $day->save();
             $hour= new Hour();
             $hour->start = $course["start"];
             $hour->finish = $course["koniec"];
@@ -46,8 +46,8 @@ class PlanController extends BaseController
 
 	}
 	public function getMyPlan(){
-		$lectures = Auth::user()->lectures;
-		View::make('plan.getplan', ['lecture'=>$lecture]);
+		$lectures = Auth::user()->lectures()->with(['day','hour','kind', 'teacher','place'])->get();
+		return View::make('plan.myplan', ['lectures'=>$lectures]);
 	}
 	public function getPlan($user){
         

@@ -30,7 +30,5 @@ class UserController extends BaseController
                 return 'wpisales cos nie tak';
             }
         }
-        
-        
     }
 }

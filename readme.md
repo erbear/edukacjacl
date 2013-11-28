@@ -2,4 +2,6 @@
 
 1. usunac .usunrozszerzenie z pliku app/config/database.php.usunrozszerzenie
 2. wpisac dane do app/config/database.php (baza powinna nazywac sie projekt1)
-3. uruchomic w konsoli php artisan migrate --seed
+3. uruchomic w konsoli 
+	composer install
+	php artisan migrate --seed

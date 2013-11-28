@@ -46,8 +46,8 @@ class PlanController extends BaseController
 
 	}
 	public function getMyPlan(){
-		$lectures = Auth::user()->lectures;
-		View::make('plan.getplan', ['lecture'=>$lecture]);
+		$lectures = Auth::user()->lectures()->with(['day','hour','kind', 'teacher','place'])->get();
+		return View::make('plan.myplan', ['lectures'=>$lectures]);
 	}
 	public function getPlan($user){
         

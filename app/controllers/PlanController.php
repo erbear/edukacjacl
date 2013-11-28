@@ -11,7 +11,7 @@ class PlanController extends BaseController
         {
             $day = new Day();
             $day->name = $course["dzien"];
-            $day->save();
+            $day->created();
             $hour= new Hour();
             $hour->start = $course["start"];
             $hour->finish = $course["koniec"];

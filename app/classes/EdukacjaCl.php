@@ -17,6 +17,7 @@ class EdukacjaCl
 	private $dataToSend;
 	private $courses;
 	private $semestr;
+	private $dane = [];
 	public function EdukacjaCl($user, $password)
 	{
 		$this->ch = curl_init ();
@@ -80,6 +81,11 @@ class EdukacjaCl
 		$this->setPOST(true);
 		curl_setopt($this->ch, CURLOPT_URL, $this->URL['logIn']);
 		$this->loadPage();
+		$doc = phpQuery::newDocumentHtml($this->HTML);
+		$this->dane['uzytkownik'] = pq('td[class="ZALOGOWANY_UZYT"]')->text();
+	}
+	public function getDane(){
+		return $this->dane;
 	}
 	private function getTokens(){
 		$doc = phpQuery::newDocumentHtml($this->HTML);
@@ -123,17 +129,17 @@ class EdukacjaCl
 				$pos2 = (isset($m[$key+1])?$m[$key+1]:0) ? strrpos($this->HTML, isset($m[$key+1])?$m[$key+1]:0) : strlen($this->HTML);
 				$course = substr($this->HTML, $pos1, ($pos2 - $pos1));
 				$doc = phpQuery::newDocumentHtml($course);
-				$this->courses[$key]["nazwa"] = pq('td:eq(1)')->text();
-				$this->courses[$key]["prowadzacy"] = pq('tr:eq(2)')->find('td:eq(0)')->text();
-				$this->courses[$key]["rodzaj"] = pq('tr:eq(2)')->find('td:eq(1)')->text();
+				$this->courses[$key]["nazwa"] = trim(pq('td:eq(1)')->text());
+				$this->courses[$key]["prowadzacy"] = trim(pq('tr:eq(2)')->find('td:eq(0)')->text());
+				$this->courses[$key]["rodzaj"] = trim(pq('tr:eq(2)')->find('td:eq(1)')->text());
 				preg_match('/(pn|wt|śr|cz|pt)(\/(TP|TN))?\s+(\d{2}):(\d{2})-(\d{2}):(\d{2}),?\s(bud.)?\s([A-Z]+-\d+),?\s(sala)?\s([^\s]+)/i', $course, $timestapmps);
-				$this->courses[$key]["dzien"] = $timestapmps[1];
-				$this->courses[$key]["tydzien"] = $timestapmps[3];
-				$this->courses[$key]["start"] = $timestapmps[4] . ":" . $timestapmps[5];
-				$this->courses[$key]["koniec"] = $timestapmps[6] . ":" . $timestapmps[7];
-				$this->courses[$key]["budynek"] = $timestapmps[9];
-				$this->courses[$key]["sala"] = $timestapmps[11];
-				$this->courses[$key]["semestr"] = $this->semestr;
+				$this->courses[$key]["dzien"] = trim($timestapmps[1]);
+				$this->courses[$key]["tydzien"] = trim($timestapmps[3]);
+				$this->courses[$key]["start"] = trim($timestapmps[4]) . ":" . trim($timestapmps[5]);
+				$this->courses[$key]["koniec"] = trim($timestapmps[6]) . ":" . trim($timestapmps[7]);
+				$this->courses[$key]["budynek"] = trim($timestapmps[9]);
+				$this->courses[$key]["sala"] = trim($timestapmps[11]);
+				$this->courses[$key]["semestr"] = trim($this->semestr);
 			}
 		}
 		

@@ -3,7 +3,7 @@ class PlanController extends BaseController
 {
 	public function getIndex()
 	{
-
+        Cache::forget('queries');
         $edukacja = new EdukacjaCl(Auth::user()->login, Crypt::decrypt(Auth::user()->password));
         $courses = $edukacja->getPlan();
 
@@ -19,6 +19,7 @@ class PlanController extends BaseController
 
         }
         $user->lectures()->sync($tablica);
+        echo Cache::get('queries'). "<br>";
         if (Auth::user()){
             return 'jej!';
         } else {

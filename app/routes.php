@@ -12,7 +12,19 @@
 */
 
 Event::listen('illuminate.query',function($sql, $bindings, $time, $name){
-	echo $time . '<br>';
+	if (Cache::has('queries'))
+	{
+		$queries = Cache::get('queries');
+		$queries++;
+		Cache::put('queries', $queries, 100);
+	}
+	else
+	{
+		Cache::add('queries', 0, 100);
+	}
+{
+    //
+}
 });
 
 Route::controller('/user', 'UserController');

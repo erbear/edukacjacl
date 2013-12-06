@@ -7,13 +7,18 @@ class PlanController extends BaseController
         $edukacja = new EdukacjaCl(Auth::user()->login, Crypt::decrypt(Auth::user()->password));
         $courses = $edukacja->getPlan();
 
-
+        $user = Auth::user();
+        $tablica = [];
         foreach ($courses as $course)
         {
             $adder = new AddRecord($course);
-            $adder->addUserLecture(Auth::user());
+            //tworzysz tablice z zajeciami
+            $lecture = $adder->addUserLecture(Auth::user());
+            $tab = array($lecture[0]=>$lecture[1]);
+            array_push($tablica, $tab[$lecture[0]]);
 
         }
+        $user->lectures()->sync($tablica);
         if (Auth::user()){
             return 'jej!';
         } else {

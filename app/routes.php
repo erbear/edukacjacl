@@ -11,6 +11,10 @@
 |
 */
 
+Event::listen('illuminate.query',function($sql, $bindings, $time, $name){
+	echo $time . '<br>';
+});
+
 Route::controller('/user', 'UserController');
 Route::controller('/plan', 'PlanController');
 
@@ -18,7 +22,6 @@ Route::get('day', function()
 {
 	$day = Lecture::find(2)->day()->get();
 	return View::make('daysGetForm')->with('day', $day);
-
 });
 
 Route::post('day', function()

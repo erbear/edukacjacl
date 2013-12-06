@@ -106,18 +106,22 @@ class AddRecord
 
 	public function addUserLecture($user)
 	{
-			$lecture = $this->getLecture();
-			$ul = DB::table('lecture_user')->where('lecture_id', $lecture->id)
-											->where('user_id', $user->id)
-											->where('semestr', $this->course["semestr"]);
-
-			if(! $ul)
-			{
-				$user->lectures()->attach($lecture, array('semestr'=>$this->course["semestr"]));
-				return false;
-			}
-
 			
+			$ul = $user->with(array('lectures'=>function($query){
+				$lecture = $this->getLecture();
+				$query->where('lecture_id', $lecture->id);
+			}))->first();
+
+			if(!isset($ul->lectures[0]))
+			{
+				$lecture = $this->getLecture();
+				// $user->lectures()->attach($lecture->id, array('semestr'=>$this->course["semestr"]));
+				return array($lecture->id,array('semestr'=>$this->course["semestr"]));
+				// // $lecture->users()->attach($user, array('semestr'=>$this->course["semestr"]));
+			}
+			
+			return null;
+			//return $lecture->users;
 	}
 
 

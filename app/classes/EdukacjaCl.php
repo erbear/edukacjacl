@@ -102,7 +102,11 @@ class EdukacjaCl
 		$this->setPOST(false);
 		$this->loadPage();
 	}
-	public function wybierzSemestr($index){
+	public function wybierzSemestr(){
+		$index = 0;
+		if ($this->sprawdzPrawa($index)!="Zapisany na kursy"){
+			$index++;
+		}
 		$doc = phpQuery::newDocumentHtml($this->HTML);
 		$urlPath = "https://edukacja.pwr.wroc.pl" . pq('a[title="Wybierz wiersz"]:eq('.$index.')')->attr('href');
 		$this->semestr = pq('a[title="Wybierz wiersz"]:eq('.$index.')')->parent('td')->nextAll('td')->eq(2)->text();
@@ -116,6 +120,12 @@ class EdukacjaCl
 		$this->dataToSend['event'] = 'WyborZapisowWidok';
 		$this->setPost(true);
 		$this->loadPage();
+	}
+	public function sprawdzPrawa($index){
+		$doc = phpQuery::newDocumentHtml($this->HTML);
+		$urlPath = pq('a[title="Wybierz wiersz"]:eq('.$index.')')->attr('href');
+		$statusZapisow = pq('a[title="Wybierz wiersz"]:eq('.$index.')')->parent('td')->parent('tr')->nextAll('tr')->eq(0)->text();
+		return trim($statusZapisow);
 	}
 	public function getDataFromSchedule(){
 		$doc = phpQuery::newDocumentHtml($this->HTML);
@@ -150,7 +160,7 @@ class EdukacjaCl
 	public function getPlan(){
 		$this->logIn();
 		$this->goToPathFromMenu('Zapisy');
-		$this->wybierzSemestr(1);
+		$this->wybierzSemestr();
 		$this->idzDoPlanu();
 		$this->getDataFromSchedule();
 		return $this->getCourses();

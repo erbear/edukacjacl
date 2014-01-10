@@ -78,19 +78,19 @@ class AddRecord
 	public function getLecture()
 	{
 		$place = $this->getPlace();
-		$hour = $this->getHour();
-		$teacher = $this->getTeacher();
-		$day = $this->getDay();
-		$kind = $this->getKind();
-		$lecture = DB::table('lectures')->where('name', $this->course["nazwa"])
-										->where('day_id', $day->id)
-										->where('kind_id', $kind->id)
-										->where('teacher_id', $teacher->id)
-										->where('hour_id', $hour->id)
-										->where('place_id', $place->id)->first();
-		if(! $lecture)
-		{
-			$lecture = new Lecture();
+        $hour = $this->getHour();
+        $teacher = $this->getTeacher();
+        $day = $this->getDay();
+        $kind = $this->getKind();
+        $lecture = DB::table('lectures')->where('name', $this->course["nazwa"])
+                                                                        ->where('day_id', $day->id)
+                                                                        ->where('kind_id', $kind->id)
+                                                                        ->where('teacher_id', $teacher->id)
+                                                                        ->where('hour_id', $hour->id)
+                                                                        ->where('place_id', $place->id)->first();
+        if(! $lecture)
+        {
+            $lecture = new Lecture();
             $lecture->name = $this->course["nazwa"];
             $lecture->day()->associate($day);
             $lecture->hour()->associate($hour);
@@ -98,28 +98,28 @@ class AddRecord
             $lecture->place()->associate($place);
             $lecture->teacher()->associate($teacher);
             $lecture->save();
-		}
+        }
 
-		return $lecture;
-
+        return $lecture;
 	}
 
 	public function addUserLecture($user)
 	{
-			
-			$ul = $user->with(array('lectures'=>function($query){
-				$lecture = $this->getLecture();
-				$query->where('lecture_id', $lecture->id);
-			}))->first();
-
-			if(!isset($ul->lectures[0]))
+			$lecture = $this->getLecture();
+			if($lecture != null)
 			{
-				$lecture = $this->getLecture();
-				// $user->lectures()->attach($lecture->id, array('semestr'=>$this->course["semestr"]));
-				return array($lecture->id,array('semestr'=>$this->course["semestr"]));
-				// // $lecture->users()->attach($user, array('semestr'=>$this->course["semestr"]));
-			}
-			
+				$ul = $user->with(array('lectures'=>function($query){
+					$query->where('lecture_id', 'lecture->id');
+				}))->first();
+
+				if(!isset($ul->lectures[0]))
+				{
+					$lecture = $this->getLecture();
+					// $user->lectures()->attach($lecture->id, array('semestr'=>$this->course["semestr"]));
+					return array($lecture->id,array('semestr'=>$this->course["semestr"]));
+					// // $lecture->users()->attach($user, array('semestr'=>$this->course["semestr"]));
+				}
+			}			
 			return null;
 			//return $lecture->users;
 	}

@@ -139,10 +139,18 @@ class EdukacjaCl
 				$pos2 = (isset($m[$key+1])?$m[$key+1]:0) ? strrpos($this->HTML, isset($m[$key+1])?$m[$key+1]:0) : strlen($this->HTML);
 				$course = substr($this->HTML, $pos1, ($pos2 - $pos1));
 				$doc = phpQuery::newDocumentHtml($course);
+				preg_match('/(pn|wt|śr|cz|pt)(\/(TP|TN))?\s+(\d{2}):(\d{2})-(\d{2}):(\d{2}),?\s(bud.)?\s([A-Z]+-\d+),?\s(sala)?\s([^\s]+)/i', $course, $timestapmps);
+				if(count($timestapmps) == 0)
+				{
+					continue;	
+				}
 				$this->courses[$key]["nazwa"] = trim(pq('td:eq(1)')->text());
 				$this->courses[$key]["prowadzacy"] = trim(pq('tr:eq(2)')->find('td:eq(0)')->text());
-				$this->courses[$key]["rodzaj"] = trim(pq('tr:eq(2)')->find('td:eq(1)')->text());
-				preg_match('/(pn|wt|śr|cz|pt)(\/(TP|TN))?\s+(\d{2}):(\d{2})-(\d{2}):(\d{2}),?\s(bud.)?\s([A-Z]+-\d+),?\s(sala)?\s([^\s]+)/i', $course, $timestapmps);
+				$this->courses[$key]["rodzaj"] = trim(pq('tr:eq(2)')->find('td:eq(1)')->text());				
+				if(count($timestapmps) == 0)
+				{
+					continue;	
+				}
 				$this->courses[$key]["dzien"] = trim($timestapmps[1]);
 				$this->courses[$key]["tydzien"] = trim($timestapmps[3]);
 				$this->courses[$key]["start"] = trim($timestapmps[4]) . ":" . trim($timestapmps[5]);
@@ -150,6 +158,7 @@ class EdukacjaCl
 				$this->courses[$key]["budynek"] = trim($timestapmps[9]);
 				$this->courses[$key]["sala"] = trim($timestapmps[11]);
 				$this->courses[$key]["semestr"] = trim($this->semestr);
+				
 			}
 		}
 		

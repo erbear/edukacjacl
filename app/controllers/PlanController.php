@@ -30,8 +30,11 @@ class PlanController extends BaseController
 
 	}
 	public function getMyPlan(){
+        Cache::forget('queries');
 		$lectures = Auth::user()->lectures()->with(['day','hour','kind', 'teacher','place'])->get();
-		return View::make('plan.myplan', ['lectures'=>$lectures]);
+		echo Cache::get('queries'). "<br>";
+        //return $lectures;
+        return View::make('plan.myplan', ['lectures'=>$lectures]);
 	}
 	public function getPlan($user){
         

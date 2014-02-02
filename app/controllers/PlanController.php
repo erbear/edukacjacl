@@ -4,11 +4,10 @@ class PlanController extends BaseController
 	public function getIndex()
 	{
         Cache::forget('queries');
-        $edukacja = new EdukacjaCl(Auth::user()->login, Crypt::decrypt(Auth::user()->password));
+        $edukacja = new EdukacjaCl('pwr184957', 'Ebar1234');
         $courses = $edukacja->getPlan();
-
         $user = Auth::user();
-        $tablica = [];
+        $tablica = array();
         foreach ($courses as $course)
         {
             $adder = new AddRecord($course);

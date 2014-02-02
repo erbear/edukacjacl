@@ -1,5 +1,5 @@
 <?php
-require('phpquery/phpQuery/phpQuery.php');
+//require('phpquery/phpQuery/phpQuery.php');
 
 class EdukacjaCl 
 {
@@ -21,22 +21,23 @@ class EdukacjaCl
 	public function EdukacjaCl($user, $password)
 	{
 		$this->ch = curl_init ();
-
+		$cookie = '';
 		//some starting options
-		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($this->ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($this->ch, CURLOPT_COOKIEJAR, 'cookie.txt');
-		curl_setopt($this->ch, CURLOPT_COOKIEFILE, 'cookie.txt');
+		curl_setopt($this->ch, CURLOPT_COOKIEJAR, $cookie);
+		curl_setopt($this->ch, CURLOPT_COOKIEFILE, $cookie);
 		curl_setopt($this->ch, CURLOPT_VERBOSE, 1);
-		curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($this->ch, CURLOPT_HEADER, 0);  
 		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 120);
-		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, true);
 
 
 		$this->setUser($user, $password);
+	}
+	function __destruct(){
+		curl_close($this->ch);
 	}
 	private function loadPage()
 	{

@@ -12,15 +12,16 @@ class UserController extends BaseController
         if (!$user){
             $edukacja = new EdukacjaCl(Input::get('login'), Input::get('password'));
             $edukacja->logIn();
-            if ($edukacja->getDane()['uzytkownik'] != null){
+            $dane = $edukacja->getDane();
+            if ($dane['uzytkownik'] != null){
                 $user = new User;
                 $user->login = Input::get('login');
                 $user->password = Crypt::encrypt(Input::get('password'));
                 $user->save();
                 Auth::loginUsingId($user->id);
-                return 'zostales zalogowany1';
+                return 'zostales zalogowany1' ;
             }else {
-                return 'nie ma takiego konta na edukcji1';
+                return 'nie ma takiego konta na edukcji1'. $dane['uzytkownik'];
             }
         }else {
             if (Crypt::decrypt($user->password) == Input::get('password')){

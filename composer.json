@@ -6,6 +6,7 @@
 	"require": {
 		"laravel/framework": "4.0.*",
 		"facebook/php-sdk": "*"
+		"electrolinux/phpquery": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

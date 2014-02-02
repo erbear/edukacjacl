@@ -19,14 +19,23 @@ class UserController extends BaseController
             //loguje sie do edukacji
             $edukacja = new EdukacjaCl(Input::get('login'), Input::get('password'));
             $edukacja->logIn();
+
             //jesli uda się zalogować, tworze nowego użytkownika
             if ($edukacja->getDane()['uzytkownik'] != null){
+
+            $dane = $edukacja->getDane();
+            if ($dane['uzytkownik'] != null){
                 $user = new User;
                 $user->login = Input::get('login');
                 $user->password = Crypt::encrypt(Input::get('password'));
                 $user->save();
                 Auth::loginUsingId($user->id);
+
                 return Redirect::to('/user/register-fb');
+
+                return 'zostales zalogowany1' ;
+            }else {
+                return 'nie ma takiego konta na edukcji1'. $dane['uzytkownik'];
             }
             //jeśli nie znajdę konta na edukacji
             else

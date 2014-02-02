@@ -13,7 +13,7 @@ class CreatingHours extends Migration {
 	{
 		//
 		Schema::create('hours', function($table){
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->time('start');
 			$table->time('finish');
 			

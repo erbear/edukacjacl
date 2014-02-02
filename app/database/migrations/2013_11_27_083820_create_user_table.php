@@ -12,7 +12,7 @@ class CreateUserTable extends Migration {
 	public function up()
 	{
 		Schema::create('users', function($table){
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string('login');
 			$table->string('password');
 			$table->timestamps();

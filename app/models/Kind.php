@@ -3,6 +3,6 @@ class Kind extends Eloquent
 {
 	  public function lectures()
     {
-            return $this->hasMany('Lecture');
+            return $this->belongsToMany('Lecture');
     }
 }

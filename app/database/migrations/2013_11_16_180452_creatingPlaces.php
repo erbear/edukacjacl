@@ -13,7 +13,7 @@ class CreatingPlaces extends Migration {
 	{
 		//
 		Schema::create('places', function($table){
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string('room');
 			$table->string('building');
 		});

@@ -13,13 +13,9 @@ class CreatingLectures extends Migration {
 	{
 		//
 		Schema::create('lectures', function($table){
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string('name');
-			$table->integer('day_id');
-			$table->integer('hour_id');
-			$table->integer('kind_id');
-			$table->integer('place_id');
-			$table->integer('teacher_id');
+			$table->integer('kind_id')->unsigned();
 			$table->timestamps();
 		});
 	}

@@ -4,20 +4,20 @@ require('phpquery/phpQuery/phpQuery.php');
 class EdukacjaCl 
 {
 
-	private $ch;
-	private $HTML;
-	private $URL= [
+	protected $ch;
+	protected $HTML;
+	protected $URL= [
 		'home' => "https://edukacja.pwr.wroc.pl/EdukacjaWeb/studia.do",
 		'logIn' => "https://edukacja.pwr.wroc.pl/EdukacjaWeb/logInUser.do",
 		'zapisy' => "https://edukacja.pwr.wroc.pl/EdukacjaWeb/zapisy.do?href=#hrefZapisySzczSlu"
 	];
-	private $UrlEvents = [
+	protected $UrlEvents = [
 		''
 	];
-	private $dataToSend;
-	private $courses;
-	private $semestr;
-	private $dane = [];
+	protected $dataToSend;
+	protected $courses;
+	protected $semestr;
+	protected $dane = [];
 	public function EdukacjaCl($user, $password)
 	{
 		$this->ch = curl_init ();
@@ -38,7 +38,7 @@ class EdukacjaCl
 
 		$this->setUser($user, $password);
 	}
-	private function loadPage()
+	protected function loadPage()
 	{
 		$this->HTML = curl_exec($this->ch);
 	}
@@ -63,10 +63,10 @@ class EdukacjaCl
 		$this->dataToSend["login"] = $login;
 		$this->dataToSend["password"] = $password;
 	}
-	private function clearData(){
+	protected function clearData(){
 		$this->dataToSend = [];
 	}
-	private function dataToUrl(){
+	protected function dataToUrl(){
 		$dataProcessed='';
 		foreach ($this->dataToSend as $key =>$value){
 			$dataProcessed .= $key . '=' . urlencode($value) . '&';
@@ -87,12 +87,12 @@ class EdukacjaCl
 	public function getDane(){
 		return $this->dane;
 	}
-	private function getTokens(){
+	protected function getTokens(){
 		$doc = phpQuery::newDocumentHtml($this->HTML);
 		$this->dataToSend['clEduWebSESSIONTOKEN'] = pq('input[name="clEduWebSESSIONTOKEN"]')->attr('value');
 		$this->dataToSend['cl.edu.web.TOKEN'] = pq('input[name="cl.edu.web.TOKEN"]')->attr('value');
 	}
-	private function getUrl($title){
+	protected function getUrl($title){
 		$doc = phpQuery::newDocumentHtml($this->HTML);
 		$urlPath = "https://edukacja.pwr.wroc.pl" . pq('.GUZIK[title="'.$title.'"]')->attr('href');
 		return $urlPath;
@@ -139,7 +139,7 @@ class EdukacjaCl
 				$pos2 = (isset($m[$key+1])?$m[$key+1]:0) ? strrpos($this->HTML, isset($m[$key+1])?$m[$key+1]:0) : strlen($this->HTML);
 				$course = substr($this->HTML, $pos1, ($pos2 - $pos1));
 				$doc = phpQuery::newDocumentHtml($course);
-				preg_match('/(pn|wt|śr|cz|pt)(\/(TP|TN))?\s+(\d{2}):(\d{2})-(\d{2}):(\d{2}),?\s(bud.)?\s([A-Z]+-\d+),?\s(sala)?\s([^\s]+)/i', $course, $timestapmps);
+				preg_match('/(pn|wt|śr|cz|pt)(\/(TP|TN))?\s+(\d{2}):(\d{2})-(\d{2}):(\d{2}),?\s(bud.)?\s([A-Z]+-\d+),?\s(sala)?\s([^\s]+)/i' , $course, $timestapmps);
 				if(count($timestapmps) == 0)
 				{
 					continue;	
@@ -158,7 +158,6 @@ class EdukacjaCl
 				$this->courses[$key]["budynek"] = trim($timestapmps[9]);
 				$this->courses[$key]["sala"] = trim($timestapmps[11]);
 				$this->courses[$key]["semestr"] = trim($this->semestr);
-				
 			}
 		}
 		

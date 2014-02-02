@@ -87,11 +87,16 @@ class AddRecord
                                                                         ->where('kind_id', $kind->id)
                                                                         ->where('teacher_id', $teacher->id)
                                                                         ->where('hour_id', $hour->id)
-                                                                        ->where('place_id', $place->id)->first();
+                                                                        ->where('place_id', $place->id)
+                                                                        ->where('semestr', $this->course["semestr"])
+                                                                        ->where('week', $this->course["tydzien"])->first();
+
         if(! $lecture)
         {
             $lecture = new Lecture();
             $lecture->name = $this->course["nazwa"];
+            $lecture->semestr = $this->course["semestr"];
+            $lecture->week = $this->course["tydzien"];
             $lecture->day()->associate($day);
             $lecture->hour()->associate($hour);
             $lecture->kind()->associate($kind);

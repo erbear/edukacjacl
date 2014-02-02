@@ -13,7 +13,7 @@ class CreatingTeachers extends Migration {
 	{
 		//
 		Schema::create('teachers', function($table){
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string('name');
 		});
 	}

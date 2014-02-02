@@ -1,33 +1,14 @@
 <?php
 class Lecture extends Eloquent
 {
-    public function day()
-    {
-        return $this->belongsTo('Day');
-    }
-
-    public function hour()
-    {
-        return $this->belongsTo('Hour');
-    }
-
     public function kind()
     {
-        return $this->belongsTo('Kind');
+        return $this->hasOne('Kind');
     }
 
-    public function place()
+    public function terms()
     {
-        return $this->belongsTo('Place');
-    }
-
-    public function teacher()
-    {
-        return $this->belongsTo('Teacher');
-    }
-    public function users()
-    {
-        return $this->belongsToMany('User');
+    	return $this->hasMany('Term');
     }
 
 }

@@ -14,7 +14,7 @@ class CreatingDays extends Migration {
 		//
 		Schema::create('days', function($table)
 		{
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string('name');
 
 		});

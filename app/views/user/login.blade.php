@@ -24,9 +24,8 @@
                   </div>
                   
                   {{Form::submit('Zaloguj!',array(
-				    		'class'=>'btn btn-default'
-				    ));}}
-                
+				    		'class'=>'btn btn-default',
+				    ));}}                 
 			{{Form::close();}}
           </div>
       </div>

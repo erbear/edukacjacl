@@ -1,8 +1,8 @@
 <?php
 class Place extends Eloquent
 {
-	  public function lectures()
+	  public function terms()
     {
-            return $this->hasMany('Lecture');
+            return $this->belongsToMany('Term');
     }
 }

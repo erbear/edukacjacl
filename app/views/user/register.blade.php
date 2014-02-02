@@ -23,7 +23,7 @@
 				    ));}}
                   </div>
                   
-                  {{Form::submit('Zarejestruj',array(
+                  {{Form::submit('Zarejestruj przez facebook',array(
 				    		'class'=>'btn btn-default'
 				    ));}}
                 

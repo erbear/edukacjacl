@@ -13,7 +13,7 @@ class CreatingKinds extends Migration {
 	{
 		//
 		Schema::create('kinds', function($table){
-			$table->increments('id');			
+			$table->increments('id')->unsigned();			
 			$table->string('name');
 		});
 	}

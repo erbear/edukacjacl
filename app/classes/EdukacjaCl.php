@@ -1,5 +1,5 @@
 <?php
-require('phpQuery.php');
+//require('phpQuery.php');
 
 class EdukacjaCl 
 {

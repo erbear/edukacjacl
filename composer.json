@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.0.*",
-		"facebook/php-sdk": "*"
+		"facebook/php-sdk": "*",
 		"electrolinux/phpquery": "dev-master"
 	},
 	"autoload": {

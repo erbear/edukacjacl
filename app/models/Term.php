@@ -9,32 +9,32 @@ class Term extends Eloquent
 
     public function teacher()
     {
-            return $this->hasOne('Teacher');
+            return $this->belongsTo('Teacher');
     }
 
     public function hour()
     {
-            return $this->hasone('Hour');
+            return $this->belongsTo('Hour');
     }
 
     public function day()
     {
-            return $this->hasOne('Day');
+            return $this->belongsTo('Day');
     }
 
     public function place()
     {
-            return $this->hasOne('Place');
+            return $this->belongsTo('Place');
     }
 
     public function space()
     {
-            return $this->hasOne('Space');
+            return $this->belongsTo('Space');
     }
 
     public function Code()
     {
-            return $this->hasOne('Code');
+            return $this->belongsTo('Code');
     }
     
     public function fields()

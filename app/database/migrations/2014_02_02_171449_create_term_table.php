@@ -14,6 +14,7 @@ class CreateTermTable extends Migration {
 		Schema::create('terms', function($table)
 		{
 			$table->increments('id')->unsigned();
+			$table->integer('lecture_id')->unsigned();
 	        $table->integer('code_id')->unsigned();
 	        $table->integer('day_id')->unsigned();
 	        $table->integer('hour_id')->unsigned();

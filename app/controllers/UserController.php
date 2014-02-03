@@ -14,16 +14,13 @@ class UserController extends BaseController
         //szukm użytkownika w bazie
         $user = User::where('login', Input::get('login'))->first(); 
         //jeśli go nie znajde w bazie
-        if (!$user)
+        if (empty($user))
         {
             //loguje sie do edukacji
             $edukacja = new EdukacjaCl(Input::get('login'), Input::get('password'));
             $edukacja->logIn();
-
-            //jesli uda się zalogować, tworze nowego użytkownika
-            if ($edukacja->getDane()['uzytkownik'] != null){
-
             $dane = $edukacja->getDane();
+            //jesli uda się zalogować, tworze nowego użytkownika                
             if ($dane['uzytkownik'] != null){
                 $user = new User;
                 $user->login = Input::get('login');
@@ -31,18 +28,14 @@ class UserController extends BaseController
                 $user->save();
                 Auth::loginUsingId($user->id);
 
-                return Redirect::to('/user/register-fb');
-
-                return 'zostales zalogowany1' ;
-            }else {
-                return 'nie ma takiego konta na edukcji1'. $dane['uzytkownik'];
+                return Redirect::to('/user/register-fb');            
             }
-            //jeśli nie znajdę konta na edukacji
-            else
+            else 
             {
-                    return 'Nie ma takiego konta w edukacji ';
+                return 'nie ma takiego konta na edukcji1'. $dane['uzytkownik'];                
             }
         }
+            
         //użytkownik jest w bazie        
         else
         {
@@ -65,6 +58,7 @@ class UserController extends BaseController
                 return 'wpisales cos nie tak2';
             }
         }        
+        
     }
 
     //wylogowywanie się

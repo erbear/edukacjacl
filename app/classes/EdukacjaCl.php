@@ -41,7 +41,7 @@ class EdukacjaCl
 		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 120);
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, true);
+		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 2);
 
 
 		$this->setUser($user, $password);

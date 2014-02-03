@@ -3,7 +3,7 @@ class Lecture extends Eloquent
 {
     public function kind()
     {
-        return $this->hasOne('Kind');
+        return $this->belongsTo('Kind');
     }
 
     public function terms()

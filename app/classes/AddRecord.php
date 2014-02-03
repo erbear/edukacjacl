@@ -8,104 +8,147 @@ class AddRecord
 	public function AddRecord($course)
 	{		
 		$this->course = $course;
-		$this->days = array("pn" => 1, "wt" => 2, "śr" => 3, "cz" => 4, "pt" => 5);
-		$this->kinds = array("Wykład" => 1, "Zajęcia laboratoryjne" => 2, "Ćwiczenia" => 3);
 	}
-	public function getDay()
+	public function getDay($termin)
 	{
-		//return $this->days[$this->course["dzien"]];
-		$day = Day::where('name', $this->course["dzien"])->first();
+		$day = Day::where('name', $termin["dzien"])->first();
 		if(! $day)
 		{
 			$day = new Day();
-            $day->name = $this->course["dzien"];
+            $day->name = $termin["dzien"];
             $day->save();
 		}
 		return $day;
 	}
 
-	public function getKind()
+	public function getKind($termin)
 	{
-		$kind = Kind::where('name', $this->course["rodzaj"])->first();
+		$kind = Kind::where('name', $termin["rodzaj"])->first();
 		if(! $kind)
 		{
 			$kind = new Kind();
-            $kind->name = $this->course["rodzaj"];
+            $kind->name = $termin["rodzaj"];
             $kind->save();
 		}
 		return $kind;
 		//return $this->kinds[$this->course["rodzaj"]];
 	}
 
-	public function getTeacher()
+	public function getTeacher($termin)
 	{
-		$teacher = Teacher::where('name', $this->course["prowadzacy"])->first();
+		$teacher = Teacher::where('name', $termin["prowadzacy"])->first();
 		if(! $teacher)
 		{
 			$teacher = new Teacher();
-            $teacher->name = $this->course["prowadzacy"];
+            $teacher->name = $termin["prowadzacy"];
             $teacher->save();
 		}
 		return $teacher;
 	}
 
-	public function getHour()
+	public function getHour($termin)
 	{
-		$hour = Hour::where('start', $this->course["start"])->where('finish', $this->course["koniec"])->first();
+		$hour = Hour::where('start', $termin["start"])->where('finish', $termin["koniec"])->first();
 		if(! $hour)
 		{
 			$hour = new Hour();
-            $hour->start = $this->course["start"];
-            $hour->finish = $this->course["koniec"];
+            $hour->start = $termin["start"];
+            $hour->finish = $termin["koniec"];
             $hour->save();
 		}
 		return $hour;
 	}
 
-	public function getPlace()
+	public function getPlace($termin)
 	{
-		$place = Place::where('building', $this->course["budynek"])->where('room', $this->course["sala"])->first();
+		$place = Place::where('building', $termin["budynek"])->where('room', $termin["sala"])->first();
 		if(! $place)
 		{
 			$place = new Place();
-            $place->building = $this->course["budynek"];
-            $place->room = $this->course["sala"];
+            $place->building = $termin["budynek"];
+            $place->room = $termin["sala"];
             $place->save();
 		}
 		return $place;
 	}
 
+	public function getCode($termin)
+	{
+		$code = Code::where('name', $termin["kod"])->first();
+		if(! $code)
+		{
+			$code = new Code();
+            $code->name = $termin["kod"];
+            $code->save();
+		}
+		return $code;
+	}
+
+	public function getSpace($termin)
+	{
+		$space = Space::where('taken', $termin["zajete"])->where('all', $termin["wszystkie"])->first();
+		if(! $space)
+		{
+			$space = new Space();
+            $space->taken = $termin["zajete"];
+            $space->all = $termin["wszystkie"];
+            $space->save();
+		}
+		return $space;
+	}
+
+	public function getTerm($termin)
+	{
+		$place = $this->getPlace($termin);
+        $hour = $this->getHour($termin);
+        $teacher = $this->getTeacher($termin);
+        $day = $this->getDay($termin);
+        $code = $this->getCode($termin);
+        $space = $this->getSpace($termin);
+        $term = Term::where('day_id', $day->id)
+                                    ->where('teacher_id', $teacher->id)
+                                    ->where('hour_id', $hour->id)
+                                    ->where('place_id', $place->id)
+                                    ->where('space_id', $space->id)
+                                    ->where('code_id', $code->id)
+                                    ->where('week', $termin["tydzien"])->first();
+
+        if(! $term)
+        {
+            $term = new Term();
+            $term->week = $termin["tydzien"];
+            $term->day()->associate($day);
+            $term->hour()->associate($hour);
+            $term->place()->associate($place);
+            $term->teacher()->associate($teacher);
+            $term->code()->associate($code);
+            $term->space()->associate($space);
+            $term->save();
+        }
+
+        return $term;
+	}
+
 	public function getLecture()
 	{
-		$place = $this->getPlace();
-        $hour = $this->getHour();
-        $teacher = $this->getTeacher();
-        $day = $this->getDay();
-        $kind = $this->getKind();
-        $lecture = DB::table('lectures')->where('name', $this->course["nazwa"])
-                                                                        ->where('day_id', $day->id)
-                                                                        ->where('kind_id', $kind->id)
-                                                                        ->where('teacher_id', $teacher->id)
-                                                                        ->where('hour_id', $hour->id)
-                                                                        ->where('place_id', $place->id)
-                                                                        ->where('semestr', $this->course["semestr"])
-                                                                        ->where('week', $this->course["tydzien"])->first();
+		$kind = $this->getKind($this->course['dane'][0]);
 
-        if(! $lecture)
+		$lecture = Lecture::where('name', $this->course['nazwa'])
+							->where('kind_id', $kind->id)
+							->where('code', $this->course['kod'])->first();
+
+		if(! $lecture)
         {
             $lecture = new Lecture();
             $lecture->name = $this->course["nazwa"];
-            $lecture->semestr = $this->course["semestr"];
-            $lecture->week = $this->course["tydzien"];
-            $lecture->day()->associate($day);
-            $lecture->hour()->associate($hour);
+            $lecture->code = $this->course["kod"];
             $lecture->kind()->associate($kind);
-            $lecture->place()->associate($place);
-            $lecture->teacher()->associate($teacher);
             $lecture->save();
         }
-
-        return $lecture;
+        foreach ($this->course['dane'] as $termin) {
+        	$term = $this->getTerm($termin);
+        	$lecture->terms()->save($term);
+        }
 	}
 
 	public function addUserLecture($user)

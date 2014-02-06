@@ -29,7 +29,19 @@ class PlanController extends BaseController
         $edukacja = new EdukacjaCl($user->login, Crypt::decrypt($user->password));
         $courses = $edukacja->idzDoPrzegladaniaKursow();
 
-        foreach ($courses as $key => $course) {
+        //print_r($courses);
+        Cache::forget('queries');
+        $adder = new AddRecords($courses);
+        $adder->addOne("days", $adder->c_days);
+        $adder->addOne("kinds", $adder->c_kinds);
+        $adder->addOne("teachers", $adder->c_teachers);
+        $adder->addOne("codes", $adder->c_codes);
+
+        $adder->addTwo('hours', $adder->c_hours, array("start", "finish"));
+        $adder->addTwo('places', $adder->c_places, array("building", "room"));
+        $adder->addTwo('spaces', $adder->c_spaces, array("taken", "all"));
+
+        //foreach ($courses as $key => $course) {
 
             // echo $course['nazwa']. " " . $course['kod']. " <br>";
             // foreach($course['dane'] as $key2 => $dane)
@@ -45,11 +57,9 @@ class PlanController extends BaseController
             // }
             // echo '<br> <br> <br>';
 
-            $adder = new AddRecord($course);
-            $adder->getLecture();
 
 
-        }
+        //}
 
         echo Cache::get('queries'). "<br>";
 
@@ -86,12 +96,30 @@ class PlanController extends BaseController
     }
 	public function getMyPlan(){
         Cache::forget('queries');
-		$terms = Term::with(['lecture.kind','lecture','code','teacher','hour','day','space','code'])->get();
-		echo Cache::get('queries'). "<br>";
-        return $terms;
+		$lectures = Lecture::with('kind','terms','terms.code','terms.teacher',
+                                    'terms.hour','terms.day','terms.space','terms.code')->get();
+		echo Cache::get('queries');
+        echo '<br>';
+        return $lectures;
         //return View::make('plan.myplan', ['lectures'=>$lectures]);
 	}
 	public function getPlan($user){        
         return $user;
 	}
+
+    public function getDay()
+    {
+        Cache::forget('queries');
+
+        $days = array('cz', 'pt', 'wt');
+       // $days2 = DB::table('days')->insert(array('name' => 'czw'));
+        $day = DB::table('days')->whereIn('name', array('czw', 'pt'))->get();
+
+        print_r($day);
+
+        echo Cache::get('queries');
+        echo '<br>';
+
+        //return $days2;
+    }
 }

@@ -14,8 +14,7 @@ class CreateFieldTable extends Migration {
 		Schema::create('fields', function($table)
 		{
 			$table->increments('id')->unsigned();
-	        $table->string('name');
-	        $table->integer('semestr')->unsigned();
+	        $table->string('name')->unique();
 	        $table->timestamps();
 		});
 	}

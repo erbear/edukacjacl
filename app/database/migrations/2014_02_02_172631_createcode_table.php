@@ -14,7 +14,7 @@ class CreatecodeTable extends Migration {
 		Schema::create('codes', function($table)
 		{
 			$table->increments('id')->unsigned();
-	        $table->string('name');
+	        $table->string('name')->unique();
 	        $table->timestamps();
 		});
 	}

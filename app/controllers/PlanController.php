@@ -27,19 +27,24 @@ class PlanController extends BaseController
 
         $user = Auth::user();
         $edukacja = new EdukacjaCl($user->login, Crypt::decrypt($user->password));
-        $courses = $edukacja->idzDoPrzegladaniaKursow();
+        $courses = $edukacja->pobierzKursyZWektora();
 
-        //print_r($courses);
         Cache::forget('queries');
         $adder = new AddRecords($courses);
-        $adder->addOne("days", $adder->c_days);
-        $adder->addOne("kinds", $adder->c_kinds);
-        $adder->addOne("teachers", $adder->c_teachers);
-        $adder->addOne("codes", $adder->c_codes);
 
-        $adder->addTwo('hours', $adder->c_hours, array("start", "finish"));
-        $adder->addTwo('places', $adder->c_places, array("building", "room"));
-        $adder->addTwo('spaces', $adder->c_spaces, array("taken", "all"));
+        //$adder->addTwo('hours', $adder->c_hours, array('start', 'finish'));
+
+        $records = $adder->addTerms(3);
+        echo Cache::get('queries'). "<br>";
+        if($records != null)
+        {
+            foreach($user->fields as $field)
+            {
+                $field->terms()->attach($records);
+            }
+        }
+        
+        
 
         //foreach ($courses as $key => $course) {
 
@@ -107,19 +112,4 @@ class PlanController extends BaseController
         return $user;
 	}
 
-    public function getDay()
-    {
-        Cache::forget('queries');
-
-        $days = array('cz', 'pt', 'wt');
-       // $days2 = DB::table('days')->insert(array('name' => 'czw'));
-        $day = DB::table('days')->whereIn('name', array('czw', 'pt'))->get();
-
-        print_r($day);
-
-        echo Cache::get('queries');
-        echo '<br>';
-
-        //return $days2;
-    }
 }

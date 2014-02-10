@@ -18,7 +18,7 @@ class UserController extends BaseController
         {
             //loguje sie do edukacji
             $edukacja = new EdukacjaCl(Input::get('login'), Input::get('password'));
-            $edukacja->logIn();
+            $field = $edukacja->getOpisStudiow()['ciag'];
             $dane = $edukacja->getDane();
             //jesli uda się zalogować, tworze nowego użytkownika                
             if ($dane['uzytkownik'] != null){
@@ -28,6 +28,8 @@ class UserController extends BaseController
                 $user->save();
                 Auth::loginUsingId($user->id);
 
+                $adder = new AddRecords();
+                $adder->addFieldUser($field, $user);
                 return Redirect::to('/user/register-fb');            
             }
             else 

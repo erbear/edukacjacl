@@ -51,7 +51,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function terms()
     {
-        return $this->hasMany('Term');
+        return $this->belongsToMany('Term')->withTimestamps();
     }
 
     public function profile()
@@ -61,7 +61,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     public function fields()
     {
-        return $this->hasMany('Field');
+        return $this->belongsToMany('Field')->withTimestamps();
     }
 
 }

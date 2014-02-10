@@ -39,11 +39,11 @@ class Term extends Eloquent
     
     public function fields()
     {
-            return $this->belongsToMany('Field');
+            return $this->belongsToMany('Field')->withTimestapms();
     }
 
     public function users()
     {
-            return $this->belongsToMany('User');
+            return $this->belongsToMany('User')->withTimestapms();
     }
 }

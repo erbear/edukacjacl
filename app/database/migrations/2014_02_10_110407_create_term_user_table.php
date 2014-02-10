@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFriendTable extends Migration {
+class CreateTermUserTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,13 +11,14 @@ class CreateFriendTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('friends', function($table)
+		Schema::create('term_user', function($table)
 		{
 			$table->increments('id')->unsigned();
+	        $table->integer('term_id')->unsigned();
 	        $table->integer('user_id')->unsigned();
-	        $table->integer('f_user_id')->unsigned();
+	        $table->boolean('joined');
 	        $table->timestamps();
-	        $table->unique(array('user_id', 'f_user_id'));
+	        $table->unique(array('user_id', 'term_id'));
 		});
 	}
 
@@ -27,8 +28,8 @@ class CreateFriendTable extends Migration {
 	 * @return void
 	 */
 	public function down()
-	{
-		Schema::drop('friends');
+	{	
+		Schema::drop('term_user');
 	}
 
 }

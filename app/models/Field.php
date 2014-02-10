@@ -4,10 +4,11 @@ class Field extends Eloquent
 {
 	public function terms()
     {
-            return $this->hasMany('Term');            
+            return $this->belongsToMany('Term')->withTimestapms();            
     }
 
     public function users()
     {
-            return $this->belongsToMany('User');            
+            return $this->belongsToMany('User')->withTimestamps();            
     }
+}

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreatingPlaces extends Migration {
+class CreateFieldUserTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,12 +11,12 @@ class CreatingPlaces extends Migration {
 	 */
 	public function up()
 	{
-		//
-		Schema::create('places', function($table){
+		Schema::create('field_user', function($table)
+		{
 			$table->increments('id')->unsigned();
-			$table->string('room');
-			$table->string('building');
-			$table->unique(array('room', 'building'));
+	        $table->integer('field_id')->unsigned();
+	        $table->integer('user_id')->unsigned();
+	        $table->timestamps();
 		});
 	}
 
@@ -26,9 +26,8 @@ class CreatingPlaces extends Migration {
 	 * @return void
 	 */
 	public function down()
-	{
-		//
-		Schema::drop('places');
+	{	
+		Schema::drop('field_user');
 	}
 
 }

@@ -16,7 +16,7 @@ class CreatingHours extends Migration {
 			$table->increments('id')->unsigned();
 			$table->time('start');
 			$table->time('finish');
-			
+			$table->unique(array('start', 'finish'));
 		});
 	}
 

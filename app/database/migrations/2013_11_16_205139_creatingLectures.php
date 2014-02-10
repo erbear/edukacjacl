@@ -17,6 +17,7 @@ class CreatingLectures extends Migration {
 			$table->string('name');
 			$table->string('code');
 			$table->integer('kind_id')->unsigned();
+			$table->unique(array('name', 'code', 'kind_id'));
 			$table->timestamps();
 		});
 	}

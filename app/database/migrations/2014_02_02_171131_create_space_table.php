@@ -16,6 +16,7 @@ class CreateSpaceTable extends Migration {
 			$table->increments('id')->unsigned();
 	        $table->integer('taken')->unsigned();
 	        $table->integer('all')->unsigned();
+	        $table->unique(array('taken', 'all'));
 	        $table->timestamps();
 		});
 		

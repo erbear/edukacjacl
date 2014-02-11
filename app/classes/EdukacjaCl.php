@@ -234,7 +234,6 @@ class EdukacjaCl
 		return $this->getCourses();
 	}
 	public function pobierzKursyZWektora(){
-		$this->logIn();
 		$this->goToPathFromMenu('Zapisy');
 		$this->semestrZapisany();
 
@@ -335,7 +334,6 @@ class EdukacjaCl
 		
 	}
 	public function getOpisStudiow(){
-		$this->logIn();
 		$this->goToPathFromMenu('Akademiki');
 		$doc = phpQuery::newDocumentHtml($this->HTML);
 		$dane = array(
@@ -346,7 +344,6 @@ class EdukacjaCl
 		return $dane;
 	}
 	public function goToZapisy(){
-		$this->logIn();
 		$this->goToPathFromMenu('Zapisy');
 		$this->semestrZapisany();
 

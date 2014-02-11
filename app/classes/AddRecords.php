@@ -238,8 +238,6 @@ class AddRecords
 			try
 			{
 				DB::table($table_name)->insert($records_to_base);
-				print_r($record_to_base);
-				echo "<br> <br>";
 			}
 			//jeśli dostane wyjątek, to ktoś musiał dodać coś w między czasie
 			//więc od nowa wyznaczam dane do dodania do bazy
@@ -538,7 +536,9 @@ class AddRecords
 												->whereIn("week", $new_terms["week"])->get();
 			for($i = 0; $i < count($terms_from_base); $i++)
 			{
-				$records_to_base[$terms_from_base[$i]->id] = array('semestr'=>$semestr, 'year'=>date("Y"));
+				$records_to_base['term_id'][] = $terms_from_base[$i]->id;
+				$records_to_base['semestr'][] = $semestr;
+				$records_to_base['year'][] = date("Y");
 			}
 			return $records_to_base;					
 		}
@@ -558,6 +558,90 @@ class AddRecords
 				$field_from_base->save();
 			}					
 			$user->fields()->sync(array($user->id));
+	}
+
+	public function addFieldTerm($field, $terms)
+	{
+		foreach($terms['term_id'] as $id)
+		{
+			$terms['field_id'][] = $field->id;
+		}
+		//pobieram rekordy z bazy, dostanę tylko te, które są tam już zapisane
+		$records_from_base = DB::table('field_term')->whereIn('term_id', $terms['term_id'])
+												->whereIn('field_id', $terms['field_id'])
+												->whereIn('year', $terms['year'])
+												->whereIn('semestr', $terms['semestr'])->get();
+		//tablica rekordów, które chce zapisać do bazy
+		$records_to_base;
+		//licznik rekordów, które chce zapisać do bazy
+		$k = 0;
+		//porównuje unikalne rekordy, z danymi z bazy
+		//jeśli mam jakieś dane z bazy
+
+		if(count($records_from_base) > 0)
+		{
+			//dla każdego unikalnego, muszę sprawdzić wszystkie rekordy z bazy
+			for($i = 0; $i < count($terms['term_id']); $i++)
+			{
+				//ustawiam flage unikalności na true
+				$unique = true;
+				for($j = 0; $j < count($records_from_base); $j++)
+				{
+					//jeśli wynik porównania będzie true to ustawiam flagę unikalności na false 
+					//i przerywam pętle
+					if($terms['term_id'][$i] == $records_from_base[$j]->term_id
+						&& $terms['field_id'][$i] == $records_from_base[$j]->field_id
+						&& $terms['semestr'][$i] == $records_from_base[$j]->semestr
+						&& $terms['year'][$i] == $records_from_base[$j]->year)
+					{
+						$unique = false;
+						break;
+					}
+				}
+				//sprawdzam zawartość flagi
+				if($unique)
+				{
+					//dodaje do tablicy dane dnia, muszę dodać też znaczniki czasu
+					//ponieważ metoda insert ich nie ustawia
+					$records_to_base[$k]['term_id'] = $terms['term_id'][$i];
+					$records_to_base[$k]['field_id'] = $terms['field_id'][$i];
+					$records_to_base[$k]['semestr'] = $terms['semestr'][$i];
+					$records_to_base[$k]['year'] = $terms['year'][$i];
+					$records_to_base[$k]['created_at'] = new DateTime;
+    				$records_to_base[$k]['updated_at'] = $records_to_base[$k]['created_at'];
+    				//zwiększam licznik
+    				$k++;
+				}
+			}
+		}
+		//jeśli odpowiedź z bazy jest pusta, do bazy dodam wszystkie unikalne rekordy
+		else
+		{
+			for($i = 0; $i < count($terms['term_id']); $i++)
+			{
+				$records_to_base[$i]['term_id'] = $terms['term_id'][$i];
+				$records_to_base[$i]['field_id'] = $terms['field_id'][$i];
+				$records_to_base[$i]['semestr'] = $terms['semestr'][$i];
+				$records_to_base[$i]['year'] = $terms['year'][$i];
+				$records_to_base[$i]['created_at'] = new DateTime;
+				$records_to_base[$i]['updated_at'] = $records_to_base[$i]['created_at'];
+			}
+		}
+		//jeśli ta tablica nie jest pusta, to jej zawartość dodaje do bazy
+		if(!empty($records_to_base)) 
+		{
+			//mogę dostać wyjątek, bo założyłem klucz unique na kolumne name
+			try
+			{
+				DB::table('field_term')->insert($records_to_base);
+			}
+			//jeśli dostane wyjątek, to ktoś musiał dodać coś w między czasie
+			//więc od nowa wyznaczam dane do dodania do bazy
+			catch(Exception $e)
+			{
+				$this->addFieldTerm($field, $terms);	
+			}		
+		}
 	}
 }
 

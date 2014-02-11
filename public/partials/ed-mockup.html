@@ -1,0 +1,4 @@
+<div ng-repeat="przedmiot in plan" style="
+top:{{services.top(przedmiot.hour.start)}}%;
+height:{{services.height(przedmiot.hour.start, przedmiot.hour.finish)}}%;
+min-height:{{services.height(przedmiot.hour.start, przedmiot.hour.finish)}}%;" class="taken {{ przedmiot.week}}"></div>

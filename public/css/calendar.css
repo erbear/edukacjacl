@@ -1,261 +1,153 @@
-#er-calendar {
-    background-color: black;
-    border: 1px solid #aaa;
-}
-#er-calendar .er-day{
-    height: 100%;
-    width: 20%;
-    background-color: #fff;
+.type1 {
+  background-color: #428bca;
+  color: white;
+  border: 1px solid #3276b1; }
+  .type1:hover {
+    border: 1px solid #1f496e;
+    background-color: #357ebd; }
+
+.type2 {
+  background-color: #f0ad4e;
+  color: white;
+  border: 1px solid #ed9c28; }
+  .type2:hover {
+    border: 1px solid #b06d0f;
+    background-color: #eea236; }
+
+.type3 {
+  background-color: #5cb85c;
+  color: white;
+  border: 1px solid #47a447; }
+  .type3:hover {
+    border: 1px solid #2d672d;
+    background-color: #4cae4c; }
+
+.type4 {
+  background-color: #d9534f;
+  color: white;
+  border: 1px solid #d2322d; }
+  .type4:hover {
+    border: 1px solid #8b211e;
+    background-color: #d43f3a; }
+
+.type5 {
+  background-color: #5bc0de;
+  color: white;
+  border: 1px solid #39b3d7; }
+  .type5:hover {
+    border: 1px solid #1f7e9a;
+    background-color: #46b8da; }
+
+.type6 {
+  background-color: lightgrey;
+  color: #969696;
+  border: 1px solid #bfbfbf; }
+  .type6:hover {
+    border: 1px solid #939393;
+    background-color: #c6c6c6; }
+
+.type7 {
+  background-color: crimson;
+  color: white;
+  border: 1px solid #b71132; }
+  .type7:hover {
+    border: 1px solid #67091c;
+    background-color: #c51236; }
+
+.type8 {
+  color: crimson; }
+
+.active {
+  visibility: visible !important; }
+
+#ed-calendar {
+  padding: 20px 0;
+  width: 1000px;
+  height: 400px;
+  font-family: calibri; }
+  #ed-calendar * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  #ed-calendar .options {
+    margin: 0 0 2% 0;
+    width: 100%; }
+  #ed-calendar .hours {
     float: left;
-    border-right: 1px solid #aaa;
+    width: 5%;
     position: relative;
-}
-#er-calendar .er-day:last-child{
+    height: 100%;
+    text-align: left;
+    margin: 0;
+    padding: 0; }
+    #ed-calendar .hours p {
+      position: absolute;
+      width: 2000%;
+      border-top: 1px solid #ddd;
+      margin: 0 0 10px; }
+  #ed-calendar .day {
+    width: 19%;
+    height: 100%;
+    float: left;
+    border: 1px solid #aaa;
     border-right: 0px;
-}
-#er-calendar .er-day .er-day-header{
-    background-color: #eee;
-    text-align: center;
+    position: relative; }
+    #ed-calendar .day:last-child {
+      border: 1px solid #aaa; }
+    #ed-calendar .day .lecture {
+      font-size: 14px;
+      position: absolute;
+      width: 100%;
+      padding: 2%;
+      text-align: center;
+      overflow: hidden;
+      z-index: 3;
+      cursor: pointer; }
+      #ed-calendar .day .lecture p, #ed-calendar .day .lecture span {
+        font-size: 12px;
+        padding: 2%;
+        margin: 0; }
+      #ed-calendar .day .lecture:hover {
+        height: auto !important;
+        z-index: 4; }
+        #ed-calendar .day .lecture:hover p, #ed-calendar .day .lecture:hover span {
+          display: block; }
+    #ed-calendar .day .taken {
+      width: 100%;
+      border: 2px dashed #202020;
+      position: absolute;
+      z-index: 99;
+      pointer-events: none;
+      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='your_transparent.png', sizingMethod='scale');
+      background: none !important; }
+    #ed-calendar .day .TP {
+      width: 50%;
+      left: 0; }
+      #ed-calendar .day .TP:hover:not(.taken) {
+        width: 100%; }
+    #ed-calendar .day .TN {
+      width: 50%;
+      right: 0; }
+      #ed-calendar .day .TN:hover:not(.taken) {
+        width: 100%; }
+  #ed-calendar .header {
+    font-weight: bold;
+    padding: 6% 0;
     height: 10%;
-    padding: 5% 0;
-    border-bottom: 1px solid #aaa;
-}
-#er-calendar .er-day .er-day-event{
-    background-color: #000;
-    position: absolute;
-    height: 12.85714285714286%;
-    width: 100%;
-    overflow:hidden;
-    padding: 2%;
-}
-
-#er-calendar .er-day .er-event-1{
+    text-align: center;
+    border-bottom: 1px solid #aaa; }
+  #ed-calendar .lecture1 {
     top: 10%;
-}
-#er-calendar .er-day .er-event-2{
-    top: 22.85714285714286%;
-}
-#er-calendar .er-day .er-event-3{
-    top: 35.71428571428571%;
-}
-#er-calendar .er-day .er-event-4{
-    top: 48.57142857142857%;
-}
-#er-calendar .er-day .er-event-5{
-    top: 61.42857142857143%;
-}
-#er-calendar .er-day .er-event-6{
-    top: 74.28571428571429%;
-}
-#er-calendar .er-day .er-event-7{
-    top: 87.14285714285714%;
-}
-#er-calendar .er-day .er-event-tp{
-    width: 50%;
-    right: 0;
-}
-#er-calendar .er-day .er-event-tn{
-    width: 50%;
-    left: 0;
-}
-#er-calendar .er-day .er-event-type-1{
-    background-color: #428bca;
-    color: #fff;
-    border: 1px solid #214e74;
-}
-#er-calendar .er-day .er-event-type-2{
-    background-color: #f0ad4e;
-    color: #fff;
-    border: 1px solid #e78f14;
-}
-#er-calendar .er-day .er-event-type-3{
-    background-color: #5cb85c;
-    color: #fff;
-    border: 1px solid #357935;
-}
-#er-calendar .er-day .er-event-type-4{
-    background-color: #d9534f;
-    color: #fff;
-    border: 1px solid #bc2d28;
-}
-#er-calendar .er-day .er-event-type-5{
-    background-color: #5bc0de;
-    color: #fff;
-    border: 1px solid #269bbe;
-}
-
-/* 
-    najmniejsze
-*/
-@media (max-width: 767px){
-    #er-calendar{
-        width: 100%;
-    }
-    #er-calendar .er-day{
-        float: none;
-        width: 100%;
-        border-right: 0;
-        border-bottom: 1px solid #aaa;
-    }
-    #er-calendar .er-day .er-day-header{
-        font-size: 12px;
-        height: 30px;
-        padding: 5px;
-    }
-    #er-calendar .er-day .er-day-event{
-        position:relative;
-        font-size: 10px;
-    }
-}
-/* 
-    male
-*/
-@media (min-width: 768px){
-    #er-calendar{
-        width: 510px;
-        height: 230px;
-    }
-    #er-calendar .er-day .er-day-header{
-        font-size: 10px;
-    }
-    #er-calendar .er-day .er-day-event{
-        font-size: 10px;
-    }
-    #er-calendar .er-day .er-day-event .er-event-hours{
-        font-size: 10px;
-        display:none;
-    }
-    
-    #er-calendar .er-day .er-day-event:hover{
-        position: absolute;
-        height: 80px;
-        width: 150px;
-        padding: 2%;
-        z-index:99;
-        font-size: 12px;
-    }
-    #er-calendar .er-day .er-day-event:hover .er-event-hours{
-        display:block;
-    }
-    #er-calendar .er-day .er-day-event .er-event-master{
-        font-size: 10px;
-    }
-}
-/* 
-    srednie
-*/
-@media (min-width: 992px){
-    #er-calendar{
-        width: 720px;
-        height: 325px;
-    }
-    #er-calendar .er-day .er-day-header{
-        font-size: 14px;
-        font-weight: 700;
-    }
-    #er-calendar .er-day .er-day-event{
-        font-size: 10px;
-    }
-    #er-calendar .er-day .er-day-event .er-event-hours, #er-calendar .er-day .er-day-event .er-event-master{
-        font-size: 10px;
-    }
-
-    #er-calendar .er-day .er-day-event:hover{
-        position: absolute;
-        height: 80px;
-        width: 100%;
-        padding: 2%;
-        z-index:99;
-        font-size: 12px;
-    }
-    #er-calendar .er-day .er-day-event:hover .er-event-hours{
-        display:block;
-    }
-}
-
-
-@media (min-width: 1200px){
-    #er-calendar{
-        width: 930px;
-        height: 420px;
-    }
-    #er-calendar .er-day .er-day-header{
-        font-size: 16px;
-        font-weight: 700;
-    }
-    #er-calendar .er-day .er-day-event{
-        font-size: 13px;
-    }
-    #er-calendar .er-day .er-day-event .er-event-hours, #er-calendar .er-day .er-day-event .er-event-master{
-        font-size: 12px;
-    }
-    #er-calendar .er-day .er-day-event:hover{
-        position: absolute;
-        height: 80px;
-        width: 100%;
-        padding: 2%;
-        z-index:99;
-        font-size: 13px;
-    }
-    #er-calendar .er-day .er-day-event:hover .er-event-hours{
-        display:block;
-    }
-}
-/* 
-    duze
-*/
-@media (min-width: 1600px){
-    #er-calendar{
-        width: 1330px;
-        height: 600px;
-    }
-    #er-calendar .er-day .er-day-header{
-        font-size: 20px;
-    }
-    #er-calendar .er-day .er-day-event{
-        font-size: 13px;
-    }
-    #er-calendar .er-day .er-day-event .er-event-hours, #er-calendar .er-day .er-day-event .er-event-master{
-        font-size: 12px;
-    }
-    #er-calendar .er-day .er-day-event:hover{
-        position: absolute;
-        height: 80px;
-        width: 100%;
-        padding: 2%;
-        z-index:99;
-        font-size: 14px;
-    }
-    #er-calendar .er-day .er-day-event:hover .er-event-hours{
-        display:block;
-    }
-}
-/* 
-    ogromne
-*/
-@media (min-width: 1900px){
-    #er-calendar{
-        width: 1550px;
-        height: 700px;
-    }
-    #er-calendar .er-day .er-day-header{
-        font-size: 25px;
-    }
-    #er-calendar .er-day .er-day-event{
-        font-size: 15px;
-    }
-    #er-calendar .er-day .er-day-event .er-event-hours, #er-calendar .er-day .er-day-event .er-event-master{
-        font-size: 13px;
-    }
-    #er-calendar .er-day .er-day-event:hover{
-        position: absolute;
-        height: 100px;
-        width: 100%;
-        padding: 2%;
-        z-index:99;
-        font-size: 16px;
-    }
-    #er-calendar .er-day .er-day-event:hover .er-event-hours{
-        display:block;
-    }
-}
+    height: 15%; }
+  #ed-calendar .lecture2 {
+    top: 21.66667%; }
+  #ed-calendar .lecture3 {
+    top: 35.0%; }
+  #ed-calendar .lecture4 {
+    top: 48.33333%; }
+  #ed-calendar .lecture5 {
+    top: 61.66667%; }
+  #ed-calendar .lecture6 {
+    top: 73.88889%; }
+  #ed-calendar .lecture7 {
+    top: 86.11111%; }

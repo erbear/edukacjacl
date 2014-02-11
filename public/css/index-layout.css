@@ -1,0 +1,121 @@
+.type1 {
+  background-color: #428bca;
+  color: white;
+  border: 1px solid #3276b1; }
+  .type1:hover {
+    border: 1px solid #1f496e;
+    background-color: #357ebd; }
+
+.type2 {
+  background-color: #f0ad4e;
+  color: white;
+  border: 1px solid #ed9c28; }
+  .type2:hover {
+    border: 1px solid #b06d0f;
+    background-color: #eea236; }
+
+.type3 {
+  background-color: #5cb85c;
+  color: white;
+  border: 1px solid #47a447; }
+  .type3:hover {
+    border: 1px solid #2d672d;
+    background-color: #4cae4c; }
+
+.type4 {
+  background-color: #d9534f;
+  color: white;
+  border: 1px solid #d2322d; }
+  .type4:hover {
+    border: 1px solid #8b211e;
+    background-color: #d43f3a; }
+
+.type5 {
+  background-color: #5bc0de;
+  color: white;
+  border: 1px solid #39b3d7; }
+  .type5:hover {
+    border: 1px solid #1f7e9a;
+    background-color: #46b8da; }
+
+.type6 {
+  background-color: lightgrey;
+  color: #969696;
+  border: 1px solid #bfbfbf; }
+  .type6:hover {
+    border: 1px solid #939393;
+    background-color: #c6c6c6; }
+
+.type7 {
+  background-color: crimson;
+  color: white;
+  border: 1px solid #b71132; }
+  .type7:hover {
+    border: 1px solid #67091c;
+    background-color: #c51236; }
+
+.type8 {
+  color: crimson; }
+
+.active {
+  visibility: visible !important; }
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: calibri; }
+  * body {
+    background-image: url("../data/shattered-island.gif");
+    overflow: hidden; }
+    * body > div {
+      width: 50%;
+      height: 100%;
+      float: left;
+      text-align: center; }
+      * body > div #image {
+        display: inline-block; }
+      * body > div#content {
+        overflow: hidden;
+        width: 50%;
+        text-align: left;
+        font-size: 8vh;
+        display: inline;
+        position: relative; }
+        * body > div#content > div {
+          top: 10%;
+          position: relative;
+          color: #fff;
+          font-size: inherit;
+          font-weight: bold; }
+          * body > div#content > div h1 {
+            font-size: inherit;
+            padding-top: 20px; }
+          * body > div#content > div p {
+            font-size: 4vh; }
+          * body > div#content > div a {
+            color: #F0E68C;
+            text-decoration: none;
+            font-size: 6vh; }
+            * body > div#content > div a:hover {
+              color: #FFD700; }
+          * body > div#content > div .fb-like {
+            top: 30px;
+            position: relative; }
+          * body > div#content > div form {
+            margin-top: 10%;
+            display: block;
+            width: 50%;
+            text-align: center;
+            padding: 10px; }
+            * body > div#content > div form input {
+              width: 100%;
+              font-size: 3vh;
+              display: block;
+              margin: 10px 0;
+              padding: 2%; }
+              * body > div#content > div form input:not(#submit) {
+                border: 1px solid lightgrey;
+                width: 95.5%; }
+              * body > div#content > div form input#submit {
+                background-color: #d9534f;
+                border: 0; }

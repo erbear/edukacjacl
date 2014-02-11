@@ -1,0 +1,12 @@
+<div id="ed-center">
+
+  	<div id="ed-page-title">{{przedmiot}}</div>
+	<div id="ed-navbar">
+		<ul>
+			<li ng-repeat="nauczyciel in nauczyciele" ui-sref-active="active" ui-sref="kurs.prowadzacy({prowadzacyid: $index})" p-default>{{nauczyciel.nazwa}}</li>
+		</ul>
+	</div>
+	<div ui-view autoscroll='false' id="ed-content">
+
+	</div>
+</div>

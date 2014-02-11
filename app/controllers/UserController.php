@@ -5,7 +5,7 @@ class UserController extends BaseController
 	public function getIndex()
     {
             //widok zawiera formularz z login i password oraz przycisk zaloguj
-            echo View::make('user.login');
+            return View::make('user.login');
     }
 
     public function postIndex()
@@ -18,8 +18,8 @@ class UserController extends BaseController
         {
             //loguje sie do edukacji
             $edukacja = new EdukacjaCl(Input::get('login'), Input::get('password'));
-            $edukacja->logIn();
-            $field = $edukacja->getOpisStudiow()['ciag'];
+            $daneArray = $edukacja->getOpisStudiow();
+            $field = $daneArray['ciag'];
             $dane = $edukacja->getDane();
             //jesli uda się zalogować, tworze nowego użytkownika                
             if ($dane['uzytkownik'] != null){

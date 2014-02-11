@@ -1,0 +1,12 @@
+<div ng-repeat="przedmiot in przedmioty" style="
+top:{{services.top(przedmiot.hour.start)}}%;
+height:{{services.height(przedmiot.hour.start, przedmiot.hour.finish)}}%;
+min-height:{{services.height(przedmiot.hour.start, przedmiot.hour.finish)}}%;" 
+ng-click="
+services.addLecture(plan,przedmiot)" ng-class="[
+'lecture', services.isChosen(przedmiot.active, przedmiot.kind_id), przedmiot.week]">
+	<div>{{przedmiot.name}}
+	<p>{{przedmiot.teacher.name}}</p>
+	<span>{{przedmiot.space.taken}} / {{przedmiot.space.all}}</span></div>
+
+</div>

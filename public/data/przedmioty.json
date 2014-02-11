@@ -1,0 +1,131 @@
+[
+    {
+        "nazwa": "Logika układów cyfrowych",
+        "kod": "E1",
+        "typ": "L",
+        "terminy": [
+            {
+                "nazwa": "Logika układów cyfrowych",
+                "prowadzacy": "pan1",
+                "dzien": "Pn",
+                "tydzien": "P",
+                "start": "13:15",
+                "koniec": "20:07",
+                "sala": "315, C-13"
+            },
+            {
+                "nazwa": "Logika układów cyfrowych",
+                "prowadzacy": "pan2",
+                "dzien": "Wt",
+                "tydzien": "P",
+                "start": "15:00",
+                "koniec": "18:00",
+                "sala": "315, C-13"
+            },
+            {
+                "nazwa": "Logika układów cyfrowych",
+                "prowadzacy": "pan3",
+                "dzien": "Czw",
+                "tydzien": "P",
+                "start": "16:00",
+                "koniec": "17:01",
+                "sala": "313, C-13"
+            },
+            {
+                "nazwa": "Logika układów cyfrowych",
+                "prowadzacy": "pan5",
+                "dzien": "Pt",
+                "tydzien": "N",
+                "start": "7:30",
+                "koniec": "9:01",
+                "sala": "315, C-13"
+            }            
+        ]
+    },
+    {
+        "nazwa": "Języki programowania",
+        "kod": "E2",
+        "typ": "L",
+        "terminy": [
+            {
+                "nazwa": "Języki programowania",
+                "prowadzacy": "pan1",
+                "dzien": "Pn",
+                "tydzien": "P",
+                "start": "13:28",
+                "koniec": "14:01",
+                "sala": "315, C-13"
+            },
+            {
+                "nazwa": "Języki programowania",
+                "prowadzacy": "pan2",
+                "dzien": "Wt",
+                "tydzien": "P",
+                "start": "15:00",
+                "koniec": "18:00",
+                "sala": "315, C-13"
+            },
+            {
+                "nazwa": "Języki programowania",
+                "prowadzacy": "pan3",
+                "dzien": "Czw",
+                "tydzien": "P",
+                "start": "16:00",
+                "koniec": "17:01",
+                "sala": "313, C-13"
+            },
+            {
+                "nazwa": "Języki programowania",
+                "prowadzacy": "pan5",
+                "dzien": "Pt",
+                "tydzien": "N",
+                "start": "7:30",
+                "koniec": "9:01",
+                "sala": "315, C-13"
+            }  
+        ]
+    },
+    {
+        "nazwa": "Niez. i diagn. ukł.cyfr. 1",
+        "kod": "E3",
+        "typ": "W",
+        "terminy": [
+            {
+                "nazwa": "Niez. i diagn. ukł.cyfr. 1",
+                "prowadzacy": "pan1",
+                "dzien": "Pn",
+                "tydzien": "P",
+                "start": "13:28",
+                "koniec": "17:01",
+                "sala": "315, C-13"
+            },
+            {
+                "nazwa": "Niez. i diagn. ukł.cyfr. 1",
+                "prowadzacy": "pan2",
+                "dzien": "Wt",
+                "tydzien": "P",
+                "start": "15:00",
+                "koniec": "18:00",
+                "sala": "315, C-13"
+            },
+            {
+                "nazwa": "Niez. i diagn. ukł.cyfr. 1",
+                "prowadzacy": "pan3",
+                "dzien": "Czw",
+                "tydzien": "P",
+                "start": "16:00",
+                "koniec": "17:01",
+                "sala": "313, C-13"
+            },
+            {
+                "nazwa": "Niez. i diagn. ukł.cyfr. 1",
+                "prowadzacy": "pan5",
+                "dzien": "Pt",
+                "tydzien": "N",
+                "start": "7:30",
+                "koniec": "9:01",
+                "sala": "315, C-13"
+            }  
+        ]
+    }    
+]

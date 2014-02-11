@@ -1,0 +1,49 @@
+<div id="ed-center">
+  <div id="ed-page-title">Twój plan</div>
+  <div id="ed-content">
+
+    <div id="ed-calendar">
+         
+      <div class="hours">
+          <p class="lecture1">7:30</p>
+          <p class="lecture2">9:15</p>
+          <p class="lecture3">11:15</p>
+          <p class="lecture4">13:15</p>
+          <p class="lecture5">15:15</p>
+          <p class="lecture6">17:05</p>
+          <p class="lecture7">18:55</p>
+      </div>
+      <div class="day">
+          <div class="header">
+              Poniedziałek
+          </div>
+          <div ed-przedmioty przedmioty="przedmioty.3" plan="plan" is-plan="isPlan"></div>
+      </div>
+      <div class="day">
+          <div class="header">
+              Wtorek
+          </div>
+          <div ed-przedmioty przedmioty="przedmioty.5" plan="plan" is-plan="isPlan"></div>
+      </div>
+      <div class="day">
+          <div class="header">
+              Środa
+          </div>
+          <div ed-przedmioty przedmioty="przedmioty.4" plan="plan" is-plan="isPlan"></div>
+      </div>
+      <div class="day">
+          <div class="header">
+              Czwartek
+          </div>
+          <div ed-przedmioty przedmioty="przedmioty.1" plan="plan" is-plan="isPlan"></div>
+      </div>
+      <div class="day">
+          <div class="header">
+              Piątek
+          </div>
+          <div ed-przedmioty przedmioty="przedmioty.2" plan="plan" is-plan="isPlan"></div>
+      </div>
+    </div>
+    <button id="wyslij-button" ng-click="sendPlan()">Wyslij</button>
+  </div>
+</div>

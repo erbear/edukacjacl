@@ -1,6 +1,4 @@
 <?php
-//require('phpQuery.php');
-
 class EdukacjaCl 
 {
 
@@ -38,7 +36,7 @@ class EdukacjaCl
 		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 120);
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, true);
 
 
 		$this->setUser($user, $password);
@@ -125,7 +123,20 @@ class EdukacjaCl
 	//wybiera semestr na ktory uzytkownik jest juz zapisany
 	public function semestrZapisany(){
 		$index = 0;
-		if ($this->sprawdzPrawa($index)!="Zapisany na kursy"){//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if ($this->sprawdzPrawa($index)!="Zapisany na kursy"){
+			$index++;
+		}
+		$doc = phpQuery::newDocumentHtml($this->HTML);
+		$urlPath = "https://edukacja.pwr.wroc.pl" . pq('a[title="Wybierz wiersz"]:eq('.$index.')')->attr('href');
+		$this->semestr = pq('a[title="Wybierz wiersz"]:eq('.$index.')')->parent('td')->nextAll('td')->eq(2)->text();
+		curl_setopt($this->ch, CURLOPT_URL, $urlPath);
+		$this->setPOST(false);
+		$this->loadPage();
+	}
+	//wybiera semestr na ktory uzytkownik jest juz zapisany
+	public function semestrPrawa(){
+		$index = 0;
+		if (($this->sprawdzPrawa($index)!="Prawo do zapisów na kursy") and ($this->sprawdzPrawa($index)!="Zapisany na kursy")){
 			$index++;
 		}
 		$doc = phpQuery::newDocumentHtml($this->HTML);
@@ -234,8 +245,9 @@ class EdukacjaCl
 		return $this->getCourses();
 	}
 	public function pobierzKursyZWektora(){
+		$this->logIn();
 		$this->goToPathFromMenu('Zapisy');
-		$this->semestrZapisany();
+		$this->semestrPrawa();
 
 		//pobieram dane zeby dostac sie do przegladania grup
 
@@ -334,18 +346,22 @@ class EdukacjaCl
 		
 	}
 	public function getOpisStudiow(){
+		$this->logIn();
 		$this->goToPathFromMenu('Akademiki');
 		$doc = phpQuery::newDocumentHtml($this->HTML);
 		$dane = array(
 				'ciag'=> trim(pq('.CENTER_TRESC')->find('table')->find('tr:eq(1)')->find('td:eq(1)')->text()),
 				'rok'=> trim(pq('.CENTER_TRESC')->find('table')->find('tr:eq(2)')->find('td:eq(1)')->text()),
 				'semestr' => trim(pq('.CENTER_TRESC')->find('table')->find('tr:eq(3)')->find('td:eq(1)')->text())
-				);
+			);
 		return $dane;
 	}
-	public function goToZapisy(){
+	//zapisuje na kilka kursow na raz. druga zmienna to czy zapisac(true) czy odpisac(false)
+	public function zapiszNaKursy($tablica, $czyZapisac = true){
+
+		$this->logIn();
 		$this->goToPathFromMenu('Zapisy');
-		$this->semestrZapisany();
+		$this->semestrPrawa();
 
 		//pobieram dane zeby dostac sie do przegladania grup
 
@@ -359,11 +375,12 @@ class EdukacjaCl
 		$this->setPOST(true);
 		curl_setopt($this->ch, CURLOPT_URL, $this->URL['przegladanieGrup']);
 		$this->loadPage();
+		$wyniki = array();
+		foreach ($tablica as $t){
+			$wyniki[] = ['kod'=>$t, 'wynik'=>$this->zapiszNaKurs($t, $czyZapisac)];
+		}
 		
-		$this->zapiszNaKurs('B00-08g');
-		
-		echo $this->HTML;
-
+		return $wyniki;
 	}
 	//zapisuje na podane kursy, bierze kod kursu i opcje true jesli zapisuje i false jesli nie
 	public function zapiszNaKurs($kod, $czyZapisac = true){
@@ -382,6 +399,19 @@ class EdukacjaCl
 		$this->setPOST(true);
 		curl_setopt($this->ch, CURLOPT_URL, $this->URL['default'] . $form->attr('action'));
 		$this->loadPage();
+		$doc = phpQuery::newDocumentHtml($this->HTML);
+		$ostrzezenie = pq('.OSTRZEZENIE')->find('li')->text();
+		$informacja = pq('.INFORMACJA')->find('li')->text();
+		if($ostrzezenie != ''){
+			preg_match('/został wykonany/i', $ostrzezenie, $match);
+			return count($match)!=0 ? true : false;
+		} else if($informacja != ''){
+			return true;
+		} else if($czyZapisac == false){
+			return true;
+		}
+		return false;
 	}
 }
+
 ?>

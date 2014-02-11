@@ -1,0 +1,164 @@
+.type1 {
+  background-color: #428bca;
+  color: white;
+  border: 1px solid #3276b1; }
+  .type1:hover {
+    border: 1px solid #1f496e;
+    background-color: #357ebd; }
+
+.type2 {
+  background-color: #f0ad4e;
+  color: white;
+  border: 1px solid #ed9c28; }
+  .type2:hover {
+    border: 1px solid #b06d0f;
+    background-color: #eea236; }
+
+.type3 {
+  background-color: #5cb85c;
+  color: white;
+  border: 1px solid #47a447; }
+  .type3:hover {
+    border: 1px solid #2d672d;
+    background-color: #4cae4c; }
+
+.type4 {
+  background-color: #d9534f;
+  color: white;
+  border: 1px solid #d2322d; }
+  .type4:hover {
+    border: 1px solid #8b211e;
+    background-color: #d43f3a; }
+
+.type5 {
+  background-color: #5bc0de;
+  color: white;
+  border: 1px solid #39b3d7; }
+  .type5:hover {
+    border: 1px solid #1f7e9a;
+    background-color: #46b8da; }
+
+.type6 {
+  background-color: lightgrey;
+  color: #969696;
+  border: 1px solid #bfbfbf; }
+  .type6:hover {
+    border: 1px solid #939393;
+    background-color: #c6c6c6; }
+
+.type7 {
+  background-color: crimson;
+  color: white;
+  border: 1px solid #b71132; }
+  .type7:hover {
+    border: 1px solid #67091c;
+    background-color: #c51236; }
+
+.type8 {
+  color: crimson; }
+
+.active {
+  visibility: visible !important; }
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: calibri; }
+
+#ed-sidebar {
+  width: 220px;
+  float: left; }
+  #ed-sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    #ed-sidebar ul li {
+      padding: 10px 10px;
+      font-style: italic;
+      font-family: georgia;
+      font-size: 13px;
+      width: inherit;
+      clear: left;
+      float: left;
+      cursor: pointer;
+      z-index: 99; }
+      #ed-sidebar ul li a {
+        text-decoration: none;
+        font-size: inherit;
+        font-family: inherit;
+        color: inherit; }
+      #ed-sidebar ul li:first-child {
+        background-color: #f95521;
+        color: #fff; }
+        #ed-sidebar ul li:first-child:hover {
+          background-color: #e84613; }
+  #ed-sidebar #legenda {
+    display: block;
+    height: auto;
+    height: 0px; }
+    #ed-sidebar #legenda div {
+      text-align: center;
+      position: relative;
+      display: block;
+      clear: left;
+      padding-top: 20px; }
+      #ed-sidebar #legenda div p {
+        width: auto;
+        float: left;
+        padding: 1% 3%;
+        cursor: pointer; }
+    #ed-sidebar #legenda .TP {
+      position: absolute;
+      width: 48%;
+      left: 0;
+      border: 2px dashed #202020; }
+    #ed-sidebar #legenda .TN {
+      position: absolute;
+      width: 48%;
+      right: 0;
+      border: 2px dashed #202020; }
+
+#ed-navbar {
+  width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  text-align: left; }
+  #ed-navbar ul {
+    min-height: 45px;
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    #ed-navbar ul li {
+      display: inline-block;
+      height: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid #fff; }
+      #ed-navbar ul li:hover {
+        border-bottom: 1px solid #aaa; }
+      #ed-navbar ul li.active {
+        background-color: lightgrey; }
+
+#ed-content {
+  width: 1000px;
+  margin: auto; }
+
+#ed-center {
+  margin: auto;
+  margin-left: 210px;
+  text-align: center; }
+  #ed-center #ed-page-title {
+    width: 1000px;
+    font-size: 30px;
+    text-align: left;
+    margin: auto;
+    padding: 20px 0;
+    border-bottom: 1px solid lightgrey; }
+  #ed-center #wyslij-button {
+    float: right;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #d9534f;
+    border: 1px solid #d9534f; }
+    #ed-center #wyslij-button:hover {
+      background-color: crimson; }

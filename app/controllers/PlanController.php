@@ -1,7 +1,7 @@
 <?php
 class PlanController extends BaseController
 {
-	public function getIndex()
+	public function getAllTerminy()
 	{
         //potrzebuje zalogowanego użytkownika
         $user = Auth::user();
@@ -21,7 +21,6 @@ class PlanController extends BaseController
         if(empty($lecture_id))
         {
             $edukacja = new EdukacjaCl($user->login, Crypt::decrypt($user->password));
-            $edukacja->logIn();
             $courses = $edukacja->pobierzKursyZWektora();
 
             $adder = new AddRecords($courses);
@@ -51,9 +50,19 @@ class PlanController extends BaseController
 	}
 
 
-    public function getPost()
+    public function getIndex()
     {
-        
+        return View::make('plan.index');
+    }
+    public function postZapiszPlan(){
+        $wszystkie = array();
+        foreach (Input::get() as $input){
+            foreach ($input as $i){
+                $wszystkie[] = $i;
+            }
+        }
+        $kod = $wszystkie[0]['code']['name'];
+        return $wszystkie;//tutaj maja byc pobrene z bazy terminy na ktore mnie zapisales, yo!
     }
 
 }

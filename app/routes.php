@@ -10,7 +10,8 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
+Blade::setContentTags('{{{', '}}}'); 		// for variables and all things Blade
+Blade::setEscapedContentTags('{{{{', '}}}}'); 	// for escaped data
 Event::listen('illuminate.query',function($sql, $bindings, $time, $name){
 	if (Cache::has('queries'))
 	{
@@ -27,5 +28,5 @@ Event::listen('illuminate.query',function($sql, $bindings, $time, $name){
 }
 });
 
-Route::get('/', 'UserController@getIndex');
+Route::controller('/user', 'UserController');
 Route::controller('/plan', 'PlanController');

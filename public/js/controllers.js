@@ -4,14 +4,15 @@
 
 angular.module('ZapisyControllers', [])
   .controller('MainController', ['$scope', '$http','CalendarService', function($scope, $http, CalendarService) {
-    $http.get('/plan/all-terminy').success(function(data){
+    $scope.$watch('initialData', function(data){
       var newData = CalendarService.customizeJSON(data);
       $scope.dane = newData;
       $scope.nauczyciele = [{nazwa: "Twoj Plan"}]
       $scope.plan = {1: new Array(), 2: new Array(), 3: new Array(), 4: new Array(), 5: new Array() };
       $scope.przedmioty = $scope.plan;
       $scope.isPlan = true;
-    });
+    })
+    
     $scope.services = CalendarService;
     $scope.isPlan = true;
     

@@ -20,7 +20,7 @@
     <link href="{{{asset('css')}}}/layout.css" rel="stylesheet">
   </head>
 
-  <body ng-controller="MainController" ng-init="path = '{{{action('PlanController@getAllTerminy')}}}';templatePlan = '{{{asset('partials/ed-plan.html')}}}'">
+  <body ng-controller="MainController" ng-init='initialData = {{{$plan}}}'>
       
       <div id="ed-sidebar">
       <div id="legenda">

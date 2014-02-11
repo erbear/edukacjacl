@@ -43,7 +43,7 @@
             {{{Form::password('password',array(
                     'placeholder'=>'Hasło'
             ));}}}
-            {{{Form::submit('Zaloguj!','',array(
+            {{{Form::submit('Zaloguj!',array(
                     'id'=>'submit'
             ));}}}
     {{{Form::close();}}}

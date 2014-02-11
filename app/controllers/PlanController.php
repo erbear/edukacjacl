@@ -55,7 +55,7 @@ class PlanController extends BaseController
         return View::make('plan.index');
     }
     public function postZapiszPlan(){
-        $wszystkie = array();
+        $wszystkie = array();//tutaj beda wszystkie kursy
         foreach (Input::get() as $input){
             foreach ($input as $i){
                 $wszystkie[] = $i;

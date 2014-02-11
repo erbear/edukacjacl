@@ -36,13 +36,7 @@ class PlanController extends BaseController
                 }
             }
 
-            foreach($user->fields as $field)
-            {
-                foreach ($field->terms as $term)
-                {                
-                    array_push($lecture_id, $term->lecture_id);                
-                }
-            }
+            return Redirect::to('/plan');
         }
         $lectures = Lecture::with('kind','terms','terms.code','terms.teacher', 'terms.hour','terms.day',
                                 'terms.space','terms.code')->whereIn('id', $lecture_id)->get();

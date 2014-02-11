@@ -27,5 +27,6 @@ Event::listen('illuminate.query',function($sql, $bindings, $time, $name){
 }
 });
 
-Route::get('/', 'UserController@getIndex');
+Route::controller('/user', 'UserController');
 Route::controller('/plan', 'PlanController');
+

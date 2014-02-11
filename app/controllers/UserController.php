@@ -8,7 +8,7 @@ class UserController extends BaseController
             echo View::make('user.login');
     }
 
-    public function postLogin()
+    public function postIndex()
     {        
 
         //szukm użytkownika w bazie
@@ -62,7 +62,7 @@ class UserController extends BaseController
             }
         }   
 
-        return Redirect::to('plan');     
+        return Redirect::to('/plan/');     
         
     }
 

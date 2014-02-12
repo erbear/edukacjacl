@@ -32,14 +32,14 @@ class Term extends Eloquent
             return $this->belongsTo('Space');
     }
 
-    public function Code()
+    public function code()
     {
             return $this->belongsTo('Code');
     }
     
     public function fields()
     {
-            return $this->belongsToMany('Field')->withTimestapms();
+            return $this->belongsToMany('Field')->withPivot('semestr', 'year')->withTimestapms();
     }
 
     public function users()

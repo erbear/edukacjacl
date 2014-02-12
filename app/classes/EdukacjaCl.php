@@ -36,7 +36,6 @@ class EdukacjaCl
 		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 120);
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, true);
 
 
 		$this->setUser($user, $password);
@@ -245,7 +244,7 @@ class EdukacjaCl
 		return $this->getCourses();
 	}
 	public function pobierzKursyZWektora(){
-		$this->logIn();
+		//$this->logIn();
 		$this->goToPathFromMenu('Zapisy');
 		$this->semestrPrawa();
 
@@ -346,7 +345,7 @@ class EdukacjaCl
 		
 	}
 	public function getOpisStudiow(){
-		$this->logIn();
+		//$this->logIn();
 		$this->goToPathFromMenu('Akademiki');
 		$doc = phpQuery::newDocumentHtml($this->HTML);
 		$dane = array(

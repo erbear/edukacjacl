@@ -21,7 +21,14 @@ class AddRecords
 		foreach($this->courses as $course)
 		{			
 			foreach ($course['dane'] as $termin) {
-				$this->c_days[] = $termin['dzien'];
+				if($termin['dzien'] == 'śr')
+				{
+					$this->c_days[] = 'sr';	
+				}
+				else
+				{
+					$this->c_days[] = $termin['dzien'];
+				}				
 				$this->c_places['building'][] = $termin['budynek'];
 				$this->c_places['room'][] = $termin['sala'];
 				$this->c_teachers[] = $termin['prowadzacy'];
@@ -140,7 +147,7 @@ class AddRecords
 	public function createUnique2D(&$c_array, $keys)
 	{
 		//iteruje jakby po każdym wierszu
-		for($i = 0; $i < count($c_array[$keys[0]]); $i++)
+		for($i = 0; $i < count($c_array[$keys[0]])-1; $i++)
 		{
 			//sprawdzam pozostałe elementy, o wyższych elementach
 			for($j = $i + 1; $j < count($c_array[($keys[0])]); $j++)
@@ -154,9 +161,12 @@ class AddRecords
 					{
 						$repeat ++;						
 					}
-					;
+					else
+					{
+						continue;
+					}
 				}
-				//jeśli wszsytkie kolumny są równe to pzerywam sprawdzanie tego elementu
+				//jeśli wszsytkie kolumny są równe to przerywam sprawdzanie tego elementu
 				if($repeat == count($keys)) break;			 
 			}
 			if($repeat < count($keys))
@@ -167,6 +177,10 @@ class AddRecords
 						$unique_array[$keys[$k]][] = $c_array[$keys[$k]][$i];
 					}
 				}
+		}
+		for($k = 0; $k < count($keys); $k++) 
+		{
+			$unique_array[$keys[$k]][] = $c_array[$keys[$k]][$i];
 		}
 		return $unique_array;
 	}
@@ -263,7 +277,7 @@ class AddRecords
 			}
 		}
 		//tablica unikalnych rekordów
-		$unique_lectures = $this->createUnique2D($this->c_lectures, array("name", "code", "kind", "kind_id"));
+		$unique_lectures = $this->createUnique2D($this->c_lectures, array("name", "code", "kind_id"));
 		//pobieram rekordy z bazy, dostanę tylko te, które są tam już zapisane
 		$lectures_from_base = DB::table('lectures')->whereIn("name", $unique_lectures["name"])
 												->whereIn("code", $unique_lectures["code"])
@@ -277,7 +291,7 @@ class AddRecords
 		if(count($lectures_from_base) > 0)
 		{
 			//dla każdego unikalnego, muszę sprawdzić wszystkie rekordy z bazy
-			for($i = 0; $i < count($unique_lectures); $i++)
+			for($i = 0; $i < count($unique_lectures['name']); $i++)
 			{
 				//ustawiam flage unikalności na true
 				$unique = true;
@@ -359,14 +373,20 @@ class AddRecords
         $spaces = DB::table('spaces')->whereIn('taken', $this->c_spaces['taken'])
         							->whereIn('all', $this->c_spaces['all'])->get();
 
-        for($i = 0; $i < count($this->c_lectures['name']); $i++)
+        							$g = 0;
+
+        for($i = 0; $i < count($this->c_codes); $i++)
 		{
 			for ($k=0; $k < count($lectures); $k++) 
 			{ 
+				$g++;
+				if($i == count($this->c_codes)-2 || $i == count($this->c_codes)-1 || $i == 1)
+					echo $g. " ".$this->c_lectures['code'][$i]." ".$lectures[$k]->code." ".($this->c_lectures['code'][$i] == $lectures[$k]->code)."<br>";
 				if($this->c_lectures['code'][$i] == $lectures[$k]->code)
 				{
+					
 					$c_terms['lecture_id'][] = $lectures[$k]->id;
-					break;
+					//break;
 				}
 			}
 			for ($k=0; $k < count($days); $k++) 
@@ -441,7 +461,7 @@ class AddRecords
 		if(count($terms_from_base) > 0)
 		{
 			//dla każdego unikalnego, muszę sprawdzić wszystkie rekordy z bazy
-			for($i = 0; $i < count($c_terms); $i++)
+			for($i = 0; $i < count($c_terms['lecture_id']); $i++)
 			{
 				//ustawiam flage unikalności na true
 				$unique = true;
@@ -486,7 +506,7 @@ class AddRecords
 		//jeśli odpowiedź z bazy jest pusta, do bazy dodam wszystkie unikalne rekordy
 		else
 		{
-			for($i = 0; $i < count($c_terms['lecture_id']); $i++)
+			for($i = 0; $i < count($c_terms['code_id']); $i++)
 			{
 					$terms_to_base[$i]['lecture_id'] = $c_terms['lecture_id'][$i];
 					$terms_to_base[$i]['day_id'] = $c_terms['day_id'][$i];
@@ -550,14 +570,24 @@ class AddRecords
 
 	public function addFieldUser($field, $user)
 	{
-			$field_from_base = DB::table('fields')->where('name', $field)->get();
-			if(empty($fields_from_base))
+			$field_from_base = DB::table('fields')->where('name', $field)->first();
+			//print_r($field_from_base);
+			//echo "    ".$field;
+			//return;
+			if($field_from_base == null)
 			{
 				$field_from_base = new Field();
 				$field_from_base->name = $field;
-				$field_from_base->save();
+				try
+				{
+					$field_from_base->save();
+				}
+				catch(Exception $ex)
+				{
+					$this->addFieldUser($field, $user);
+				}
 			}					
-			$user->fields()->sync(array($user->id));
+			$user->fields()->sync(array($field_from_base->id));
 	}
 
 	public function addFieldTerm($field, $terms)

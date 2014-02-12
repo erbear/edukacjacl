@@ -18,6 +18,7 @@ class UserController extends BaseController
         {
             //loguje sie do edukacji
             $edukacja = new EdukacjaCl(Input::get('login'), Input::get('password'));
+            $daneArray = $edukacja->logIn();
             $daneArray = $edukacja->getOpisStudiow();
             $field = $daneArray['ciag'];
             $dane = $edukacja->getDane();
@@ -73,7 +74,7 @@ class UserController extends BaseController
         //$facebook = new Facebook(Config::get('facebook'));
         //$facebook->destroySession();
         Auth::logout();
-        return Redirect::to('/user/login');
+        return Redirect::to('/');
     }
 
     // //łączenie konta z facebook'iem

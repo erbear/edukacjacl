@@ -4,7 +4,7 @@ class Field extends Eloquent
 {
 	public function terms()
     {
-            return $this->belongsToMany('Term')->withTimestamps();            
+            return $this->belongsToMany('Term')->withPivot('semestr', 'year')->withTimestamps();            
     }
 
     public function users()

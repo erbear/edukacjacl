@@ -3,7 +3,7 @@ class PlanController extends BaseController
 {
 	public function getAllTerminy()
 	{
-        //potrzebuje zalogowanego użytkownika
+         //potrzebuje zalogowanego użytkownika
         $user = Auth::user();
 
         $lecture_id = array();
@@ -11,7 +11,17 @@ class PlanController extends BaseController
         //najpierw chce pobrać z bazy wszyskie zajecia, które nalezą do danego kierunku
         foreach($user->fields as $field)
         {
-            foreach ($field->terms as $term)
+            $term_field = DB::table('field_term')->where('field_id', '=', $field->id)
+                                        ->where('semestr', '=', 3)
+                                        ->where('year', '=', date("Y"))->get();
+            if($term_field == null) break;
+            foreach($term_field as $t)
+            {
+                $term_id[] = $t->term_id;
+            }
+            
+            $terms = DB::table('terms')->whereIn('id', $term_id)->get();
+            foreach ($terms as $term)
             {                
                 array_push($lecture_id, $term->lecture_id);                
             }
@@ -21,6 +31,7 @@ class PlanController extends BaseController
         if(empty($lecture_id))
         {
             $edukacja = new EdukacjaCl($user->login, Crypt::decrypt($user->password));
+            $edukacja->logIn();
             $courses = $edukacja->pobierzKursyZWektora();
 
             $adder = new AddRecords($courses);
@@ -54,7 +65,17 @@ class PlanController extends BaseController
         //najpierw chce pobrać z bazy wszyskie zajecia, które nalezą do danego kierunku
         foreach($user->fields as $field)
         {
-            foreach ($field->terms as $term)
+            $term_field = DB::table('field_term')->where('field_id', '=', $field->id)
+                                        ->where('semestr', '=', 3)
+                                        ->where('year', '=', date("Y"))->get();
+            if($term_field == null) break;
+            foreach($term_field as $t)
+            {
+                $term_id[] = $t->term_id;
+            }
+            
+            $terms = DB::table('terms')->whereIn('id', $term_id)->get();
+            foreach ($terms as $term)
             {                
                 array_push($lecture_id, $term->lecture_id);                
             }
@@ -64,6 +85,7 @@ class PlanController extends BaseController
         if(empty($lecture_id))
         {
             $edukacja = new EdukacjaCl($user->login, Crypt::decrypt($user->password));
+            $edukacja->logIn();
             $courses = $edukacja->pobierzKursyZWektora();
 
             $adder = new AddRecords($courses);
@@ -85,15 +107,18 @@ class PlanController extends BaseController
 
         return View::make('plan.index', array('plan'=> $lectures));
     }
+
+
     public function postZapiszPlan(){
         $wszystkie = array();//tutaj beda wszystkie kursy
         foreach (Input::get() as $input){
             foreach ($input as $i){
-                $wszystkie[] = $i;
+                $wszystkie[] = $i['code']['name'];
             }
-        }
-        $kod = $wszystkie[0]['code']['name'];
+        }        
+        $kod = $wszystkie[0];
         return $wszystkie;//tutaj maja byc pobrene z bazy terminy na ktore mnie zapisales, yo!
     }
 
 }
+

@@ -26,10 +26,10 @@ angular.module('ZapisyServices', []).
     //typ cegielki z zajeciami (wyklad, labolatoria itd.)
     this.type = function(rodzaj){
         var type = {
-            1: 'type1',
-            2: 'type2',
-            3: 'type3',
-            4: 'type5',
+            'Wykład': 'type1',
+            'Ćwiczenia': 'type2',
+            'Zajęcia laboratoryjne': 'type3',
+            'Projekt': 'type5',
         }
         return type[rodzaj];
     }
@@ -67,17 +67,17 @@ angular.module('ZapisyServices', []).
                     //jak nie to tworzy nowy obiekt z dniami tygodnia
                     lecture.teachers[tmp.indexOf(term.teacher_id)] = {
                     nazwa: term.teacher.name,
-                    1: [], 
-                    2: [], 
-                    3: [], 
-                    4: [], 
-                    5: []
+                    pn: [], 
+                    wt: [], 
+                    sr: [], 
+                    cz: [], 
+                    pt: []
                     };
                 }
-                term.kind_id = lecture.kind_id;
+                term.kind = lecture.kind.name;
                 term.name = lecture.name;
                 //kazde zajecie wkladam w odpowiedni dzien
-                lecture.teachers[tmp.indexOf(term.teacher_id)][term.day_id].push(term);
+                lecture.teachers[tmp.indexOf(term.teacher_id)][term.day.name].push(term);
             }); 
             //usuwam nie potrzebny obiekt
             delete lecture.terms;
@@ -99,7 +99,7 @@ angular.module('ZapisyServices', []).
             } 
         }else {//jezeli nie ma terminu w planie
             if (!this.isFull(lecture)){
-                plan[lecture.day_id].push(lecture);//dodaje termin do planu na wyznaczone miejsce
+                plan[lecture.day.name].push(lecture);//dodaje termin do planu na wyznaczone miejsce
                 lecture.active = true;//mowi terminowi ze znajduje sie w planie
             }
             

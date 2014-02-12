@@ -26,7 +26,7 @@
       <div id="legenda">
           <ul>
               <li ui-sref="plan">Plan</li>
-              <li ng-repeat="dana in dane" ui-sref="kurs({kursid: $index})" ng-class="[services.type(dana.kind.id), isDone(plan, dana) ? 'type6' : '']">{{dana.name}}</li>
+              <li ng-repeat="dana in dane" ui-sref="kurs({kursid: $index})" ng-class="[services.type(dana.kind.name), isDone(plan, dana) ? 'type6' : '']">{{dana.name}}</li>
           </ul>   
           <div><p class="type1">wykład</p><p class="type2">laboratoria</p><p class="type3">ćwiczenia</p><p class="type5">projekt</p></div>
         <div><span class="TP">zajęty TP</span><span class="TN">zajęty TN</span></div>

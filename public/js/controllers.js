@@ -6,9 +6,10 @@ angular.module('ZapisyControllers', [])
   .controller('MainController', ['$scope', '$http','CalendarService', function($scope, $http, CalendarService) {
     $scope.$watch('initialData', function(data){
       var newData = CalendarService.customizeJSON(data);
+      console.log(newData);
       $scope.dane = newData;
       $scope.nauczyciele = [{nazwa: "Twoj Plan"}]
-      $scope.plan = {1: new Array(), 2: new Array(), 3: new Array(), 4: new Array(), 5: new Array() };
+      $scope.plan = {pn: new Array(), wt: new Array(), sr: new Array(), cz: new Array(), pt: new Array() };
       $scope.przedmioty = $scope.plan;
       $scope.isPlan = true;
     })

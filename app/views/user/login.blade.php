@@ -32,10 +32,9 @@
     </div>
     <div id="content">
       <div >
-        <div class="fb-like" data-href="http://erbear.com/" data-colorscheme="dark" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+        <div class="fb-like" data-href="https://www.facebook.com/naszsos" data-colorscheme="dark" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
         <h1>Zapisy na kursy to udręka.</h1>
         <p>Ale zbliża się alternatywa.</p>
-        <a href="/demo/index.html">Demo</a>
         {{{Form::open(array('path'=>'user.login', 'method'=>'post'));}}}
             {{{Form::text('login','',array(
                     'placeholder'=>'Login'

@@ -27,8 +27,8 @@ angular.module('ZapisyServices', []).
     this.type = function(rodzaj){
         var type = {
             'Wykład': 'type1',
-            'Ćwiczenia': 'type2',
-            'Zajęcia laboratoryjne': 'type3',
+            'Zajęcia laboratoryjne': 'type2',
+            'Ćwiczenia': 'type3',
             'Projekt': 'type5',
         }
         return type[rodzaj];

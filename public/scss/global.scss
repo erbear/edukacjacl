@@ -1,0 +1,51 @@
+$niebieski:#428bca;
+$zolty: #f0ad4e;
+$zielony: #5cb85c;
+$czerwony: #d9534f;
+$blekit: #5bc0de;
+$szary:  #D3D3D3;
+$ciemny_czerwony: #DC143C;
+
+@mixin color($kolor, $font : #fff) {
+    background-color: $kolor;
+    color: $font;
+    border: 1px solid darken($kolor, 8%);
+    &:hover{
+        border: 1px solid darken($kolor, 25%);
+        background-color: darken($kolor, 5%);
+    }
+}
+
+.type1{
+    @include color($niebieski);
+}
+.type2{
+    @include color($zolty);
+}
+
+.type3{
+    @include color($zielony);
+}
+
+.type4{
+    @include color($czerwony);
+}
+.type5{
+    @include color($blekit);
+}
+
+.type6{
+    @include color($szary, #969696);
+}
+
+.type7{
+    @include color($ciemny_czerwony);
+}
+
+.type8{
+    color: $ciemny_czerwony;
+}
+
+.active{
+    visibility: visible!important;
+}

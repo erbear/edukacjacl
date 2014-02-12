@@ -92,6 +92,8 @@
             padding-top: 20px; }
           * body > div#content > div p {
             font-size: 4vh; }
+          * body > div#content > div span {
+            font-size: 2vh; }
           * body > div#content > div a {
             color: #F0E68C;
             text-decoration: none;

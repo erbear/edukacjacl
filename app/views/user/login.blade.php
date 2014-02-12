@@ -36,6 +36,7 @@
         <h1>Zapisy na kursy to udręka.</h1>
         <p>Ale zbliża się alternatywa.</p>
         {{{Form::open(array('path'=>'user.login', 'method'=>'post'));}}}
+          <span>Zaloguj się za pomocą danych z Edukacja.CL </span>
             {{{Form::text('login','',array(
                     'placeholder'=>'Login'
             ));}}}

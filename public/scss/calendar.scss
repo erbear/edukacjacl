@@ -1,0 +1,134 @@
+@import "global";
+
+$font: calibri;
+$lecture1: 10%;
+$lecture2: 21.66666666666655%;
+$lecture3: 34.99999999999975%;
+$lecture4: 48.333333333333333295%;
+$lecture5: 61.666666666666653295%;
+$lecture6: 73.888888888888753295%;
+$lecture7: 86.111111111110853295%;
+@mixin sizing(){
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+@mixin week(){
+	width:50%;
+	&:hover{
+		&:not(.taken){
+			width:100%;
+		}
+	}
+}
+#ed-calendar{
+	padding: 20px 0;
+    width: 1000px;
+    height: 400px;
+    font-family: $font;
+    *{
+    	@include sizing;
+    }
+    .options{
+	    margin: 0 0 2% 0;
+	    width: 100%;
+    }
+    .hours {
+	    float: left;
+	    width: 5%;
+	    position: relative;
+	    height: 100%;
+	    text-align: left;
+	    margin: 0;
+	    padding: 0;
+	    p{
+		    position: absolute;
+		    width: 2000%;
+		    border-top: 1px solid #ddd;
+		    margin: 0 0 10px;
+	    }
+    }
+    .day{
+	    width: 19%;
+	    height: 100%;
+	    float: left;
+	    border: 1px solid #aaa;
+	    border-right: 0px;
+	    position: relative;	
+	    &:last-child{
+    		border: 1px solid #aaa;
+	    }
+	    .lecture {
+		    font-size: 14px;
+		    position: absolute;
+		    width: 100%;
+		    padding: 2%;
+		    text-align: center;
+		    overflow:hidden;
+		    z-index:3;
+		    cursor: pointer;
+		    p,span{
+			    font-size: 12px;
+			    padding: 2%;
+			    margin: 0;
+		    }
+		    &:hover {
+			    height:auto!important;
+			    z-index: 4;
+		    	p,span {
+		    		display: block;	
+		    	}
+    			
+		    }
+	    }
+
+	    .taken{	    	
+	    	width: 100%;	
+    		border:2px dashed darken($szary, 70%);
+	    	position:absolute;
+	    	z-index: 99;
+	    	// przezroczystosc
+	    	pointer-events:none;
+	    	// dla IE
+	    	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='your_transparent.png', sizingMethod='scale');
+			background:none !important;
+		}
+	    .TP{
+	    	@include week;
+	    	left:0;
+	    }
+	    .TN{
+	    	@include week;
+	    	right:0;
+	    }
+    }
+    .header {
+	    font-weight: bold;
+	    padding: 6% 0;
+	    height: 10%;
+	    text-align:center;
+	    border-bottom: 1px solid #aaa;
+    }
+    .lecture1{
+    	top: $lecture1;
+    	height: 15%;
+    }
+    .lecture2{
+    	top: $lecture2;
+    }
+    .lecture3{
+    	top: $lecture3;
+    }
+    .lecture4{
+    	top: $lecture4;
+    }
+    .lecture5{
+    	top: $lecture5;
+    }
+    .lecture6{
+    	top: $lecture6;
+    }
+    .lecture7{
+    	top: $lecture7;
+    }
+}

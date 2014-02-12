@@ -1,0 +1,82 @@
+@import "global";
+*{
+    padding: 0;
+    margin: 0;
+    font-family: calibri;
+    body{
+	
+		//ckground-color: #212d2d;
+		background-image:url('../data/shattered-island.gif');
+		//background-image:url('../data/chalkboard.jpg');
+		overflow: hidden;
+		>div{
+			width: 50%;
+			height: 100%;
+			float: left;
+			text-align: center;
+			#image {
+				display:inline-block;
+			}
+			&#content{
+				overflow: hidden;
+				width: 50%;
+				text-align: left;
+				font-size: 8vh;
+    			display:inline;
+    			position: relative;
+				&>div {
+					top: 10%;
+					position:relative;
+					color: #fff;
+					font-size: inherit;
+					font-weight: bold;	
+					h1{
+						font-size: inherit;
+						padding-top: 20px;
+					}
+					p{
+						font-size: 4vh;
+					}
+					span{
+						font-size: 2vh;
+					}
+					a{
+						color: #F0E68C;
+						text-decoration: none;
+						font-size: 6vh;
+						&:hover{
+							color: #FFD700; 
+						}
+					}
+					.fb-like{
+						top: 30px;
+						position: relative;
+					}
+					form{
+						margin-top: 10%;
+						display: block;
+						width: 50%;
+						text-align: center;
+						padding: 10px;
+						input{
+							width: 100%;
+							font-size: 3vh;
+							display: block;
+							margin: 10px 0;
+							padding: 2%;
+							&:not(#submit){
+								border: 1px solid $szary;
+								width: 95.5%;
+							}
+							&#submit {
+								background-color: $czerwony;
+								border: 0;
+							}
+						}
+					}
+					
+				}
+			}
+		}
+	}
+}
